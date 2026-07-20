@@ -1,6 +1,7 @@
 import {  Inter,Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import Navbar from "@/components/ui/Navbar";
 
 
 
@@ -29,8 +30,8 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${interFont.className}  h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        
+      <body className="min-h-full  flex flex-col antialiased ">
+        <Navbar/>
         {children}
        <Toaster />  
         </body>
