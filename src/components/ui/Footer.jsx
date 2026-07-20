@@ -1,14 +1,19 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FiUsers, FiShare2, FiGlobe } from "react-icons/fi";
 
 const Footer = () => {
+  const path = usePathname();
+  // console.log("path console is here", path);
+
+  if (path.startsWith("/dashboard")) return null;
+
   return (
     <footer className="w-full bg-[#030303] text-white border-t border-zinc-900/60 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
-        
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 pb-12 md:pb-16">
-          
           {/* Logo and Tagline Column */}
           <div className="md:col-span-5 flex flex-col items-start">
             <Link
@@ -18,9 +23,10 @@ const Footer = () => {
               NextHire
             </Link>
             <p className="text-zinc-400 text-sm leading-relaxed max-w-sm mb-6 font-light">
-              The AI-native career platform. Built for people who take their work seriously.
+              The AI-native career platform. Built for people who take their
+              work seriously.
             </p>
-            
+
             {/* Social Icons */}
             <div className="flex items-center gap-3">
               <a
@@ -148,7 +154,6 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-
         </div>
 
         {/* Bottom Section */}
@@ -171,7 +176,6 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-
       </div>
     </footer>
   );

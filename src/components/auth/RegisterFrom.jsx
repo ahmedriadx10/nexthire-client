@@ -61,6 +61,15 @@ const RegisterForm = () => {
     }
   };
 
+
+  const handleGoogleSignIn=async()=>{
+
+const result=await authClient.signIn.social({
+  provider:'google',
+})
+
+  }
+
   return (
     <div className="w-full">
       <Form
@@ -233,6 +242,8 @@ const RegisterForm = () => {
       <Button
         type="button"
         className="w-full h-11 rounded-lg bg-[#141416]/90 border border-zinc-800 hover:bg-[#18181b]/90 text-white font-semibold text-xs tracking-wide flex items-center justify-center gap-2.5 cursor-pointer transition-all duration-200"
+
+        onPress={handleGoogleSignIn}
       >
         <FcGoogle className="text-lg" />
         Continue with Google

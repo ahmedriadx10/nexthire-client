@@ -10,23 +10,15 @@ import toast from "react-hot-toast";
 import { roleBasedDashboardLinks } from "@/lib/core/management-data";
 import { authClient } from "@/lib/auth-client";
 
-
-
-const NavbarManage = ({activeUser}) => {
+const NavbarManage = ({ activeUser }) => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
+  const currentUser = activeUser;
 
-const currentUser=activeUser
+  if (pathname.startsWith("/dashboard")) return null;
 
-if(pathname.startsWith('/dashboard')){
-  return null
-}
-
-
-
-  
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Browse Jobs", href: "/browse-jobs" },
@@ -40,8 +32,6 @@ if(pathname.startsWith('/dashboard')){
     });
   }
 
-  
-
   // কাস্টম লোগো আইকন (image_210dfc.png এর মতো রাউন্ডেড পার্পল স্কয়ার)
   const Logo = () => (
     <Link
@@ -51,7 +41,7 @@ if(pathname.startsWith('/dashboard')){
       {/* <div className="w-8 h-8 bg-[#6322d6] rounded-lg flex items-center justify-center text-white font-serif font-bold text-lg shadow-sm">
         F
       </div> */}
-   
+
       <span>NextHire</span>
     </Link>
   );
@@ -69,9 +59,7 @@ if(pathname.startsWith('/dashboard')){
 
   return (
     <nav className="w-full sticky top-0 z-50  backdrop-blur-xl bg-black/50  px-6 sm:px-8 h-16 flex items-center justify-between">
-
       <Logo />
-
 
       <div className="hidden md:flex items-center gap-8">
         {navLinks.map((link) => {
@@ -92,25 +80,33 @@ if(pathname.startsWith('/dashboard')){
         })}
       </div>
 
-
       <div className="flex items-center gap-4">
-     
         <div className="hidden md:block ">
           {currentUser ? (
-        
             <Dropdown className="">
               <Dropdown.Trigger className="rounded-full cursor-pointer ring-2 ring-transparent hover:ring-primary/30 transition-all">
                 <Avatar>
-                  <Avatar.Image alt={currentUser.name} src={currentUser.image} referrerPolicy="no-referrer" />
-                  <Avatar.Fallback delayMs={1000}>{currentUser.name.slice(0,2)}</Avatar.Fallback>
+                  <Avatar.Image
+                    alt={currentUser.name}
+                    src={currentUser.image}
+                    referrerPolicy="no-referrer"
+                  />
+                  <Avatar.Fallback delayMs={1000}>
+                    {currentUser.name.slice(0, 2)}
+                  </Avatar.Fallback>
                 </Avatar>
               </Dropdown.Trigger>
-              <Dropdown.Popover className='mr-2.5  rounded-2xl'>
+              <Dropdown.Popover className="mr-2.5  rounded-2xl">
                 <div className="px-3 pt-3 pb-1 ">
                   <div className="flex items-center gap-2">
                     <Avatar size="sm">
-                      <Avatar.Image alt={currentUser.name} src={currentUser.image} />
-                      <Avatar.Fallback delayMs={1000}>{currentUser?.name.slice(0,2)}</Avatar.Fallback>
+                      <Avatar.Image
+                        alt={currentUser.name}
+                        src={currentUser.image}
+                      />
+                      <Avatar.Fallback delayMs={1000}>
+                        {currentUser?.name.slice(0, 2)}
+                      </Avatar.Fallback>
                     </Avatar>
                     <div className="flex flex-col gap-0">
                       <p className="text-sm leading-5 font-semibold text-slate-800">
@@ -123,13 +119,14 @@ if(pathname.startsWith('/dashboard')){
                   </div>
                 </div>
                 <Dropdown.Menu>
-             
                   <Dropdown.Item id="profile" textValue="Profile">
                     <Link
                       href={`/dashboard/${currentUser?.role}/profile`}
                       className="w-full flex items-center justify-between gap-2 cursor-pointer"
                     >
-                      <Label className="cursor-pointer text-slate-900">Profile</Label>
+                      <Label className="cursor-pointer text-slate-900">
+                        Profile
+                      </Label>
                       <FiUser className="size-4 text-slate-900" />
                     </Link>
                   </Dropdown.Item>
@@ -139,7 +136,7 @@ if(pathname.startsWith('/dashboard')){
                     textValue="Logout"
                     variant="danger"
                     onPress={handleLogOut}
-                    className='hover:bg-red-100'
+                    className="hover:bg-red-100"
                   >
                     <div className="flex w-full items-center  justify-between gap-2 cursor-pointer">
                       <Label className="text-red-500 font-medium">
@@ -152,7 +149,6 @@ if(pathname.startsWith('/dashboard')){
               </Dropdown.Popover>
             </Dropdown>
           ) : (
-    
             <div className="flex items-center gap-3">
               <Link
                 href="/login"
@@ -161,25 +157,24 @@ if(pathname.startsWith('/dashboard')){
                 Sign In
               </Link>
               <Button className="bg-[#6322d6] text-white font-semibold text-xs px-4 h-8 rounded-lg hover:bg-[#521bc2] transition-colors shadow-sm">
-             <Link href={'register'}>Sign Up</Link>
+                <Link href={"register"}>Sign Up</Link>
               </Button>
             </div>
           )}
         </div>
 
-        
         {currentUser && (
           <div className="block md:hidden">
-            <Avatar >
+            <Avatar>
               <Avatar.Image alt={currentUser.name} src={currentUser.image} />
-              <Avatar.Fallback delayMs={1000}>{currentUser?.name?.slice(0,2)}</Avatar.Fallback>
+              <Avatar.Fallback delayMs={1000}>
+                {currentUser?.name?.slice(0, 2)}
+              </Avatar.Fallback>
             </Avatar>
           </div>
         )}
 
- 
         <button
-        
           onClick={() => setIsOpen(!isOpen)}
           className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 cursor-pointer hover:bg-slate-50 focus:outline-none md:hidden transition-colors"
           aria-label="Toggle Menu"
@@ -188,10 +183,8 @@ if(pathname.startsWith('/dashboard')){
         </button>
       </div>
 
-
       {isOpen && (
         <div className="absolute top-16 left-0 w-full bg-white border-b border-slate-100 shadow-lg flex flex-col p-6 space-y-4 md:hidden transition-all duration-300 z-40">
-   
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -207,7 +200,6 @@ if(pathname.startsWith('/dashboard')){
               </Link>
             );
           })}
-
 
           {!currentUser && (
             <div className="flex flex-col gap-3 pt-2">
@@ -229,11 +221,10 @@ if(pathname.startsWith('/dashboard')){
             </div>
           )}
 
-
           {currentUser && (
             <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
               <Link
-            href={`/dashboard/${currentUser?.role}/profile`}
+                href={`/dashboard/${currentUser?.role}/profile`}
                 onClick={() => setIsOpen(false)}
                 className="text-sm font-medium text-slate-500 hover:text-slate-900 flex items-center gap-2"
               >
