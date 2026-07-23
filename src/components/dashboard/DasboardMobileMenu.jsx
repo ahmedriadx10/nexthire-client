@@ -42,12 +42,32 @@ const DasboardMobileMenu = ({ user }) => {
           NextHire
         </Link>
 
-        <button
-          onClick={() => setIsOpen(true)}
-          className="p-2 -mr-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-900/50 transition-colors active:scale-95 focus:outline-none"
-        >
-          <FiMenu className="size-6" />
-        </button>
+        <div className="flex items-center gap-3">
+          {user && (
+            <Avatar
+              // color="primary"
+              size="sm"
+              className="cursor-pointer shrink-0"
+              onClick={() => setIsOpen(true)}
+            >
+              <Avatar.Image
+                src={user?.image}
+                alt={user?.name || "User"}
+                referrerPolicy="no-referrer"
+              />
+              <Avatar.Fallback delayMs={600}>
+                {user?.name?.slice(0, 2).toUpperCase() || "NH"}
+              </Avatar.Fallback>
+            </Avatar>
+          )}
+
+          <button
+            onClick={() => setIsOpen(true)}
+            className="p-2 -mr-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-900/50 transition-colors active:scale-95 focus:outline-none"
+          >
+            <FiMenu className="size-6" />
+          </button>
+        </div>
       </header>
 
       {/* HeroUI Drawer */}
@@ -61,13 +81,13 @@ const DasboardMobileMenu = ({ user }) => {
 
             {/* Drawer Logo Section */}
             <Drawer.Header className="px-6 pt-6 pb-4 border-b border-zinc-900/80">
-              <Drawer.Heading className="text-xl font-black text-white select-none">
+              <Drawer.Heading className="text-xl font-black text-primary select-none">
                 NextHire
               </Drawer.Heading>
             </Drawer.Header>
 
             {/* Drawer Navigation Links */}
-            <Drawer.Body className="flex-1 px-4 py-4 space-y-1.5 overflow-y-auto">
+            <Drawer.Body className="flex-1 px-4 py-4 space-y-1.5 overflow-y-auto scrollbar-thin scrollbar-thumb-primary">
               {dashboardNavlinks.map((link) => {
                 const Icon = link.icon;
                 const isActive =

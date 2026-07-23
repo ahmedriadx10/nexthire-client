@@ -42,7 +42,7 @@ const DashboardSidbar = ({ user }) => {
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
+      <nav className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto scrollbar-thin scrollbar-thumb-primary">
         {dashboardNavlinks.map((link) => {
           const Icon = link.icon;
           const isActive =
@@ -86,7 +86,7 @@ const DashboardSidbar = ({ user }) => {
             <div className="flex items-center gap-3">
               <Avatar
                 // isBordered
-                color="primary"
+                // color="primary"
                 size="md"
                 className="cursor-pointer shrink-0"
               >
