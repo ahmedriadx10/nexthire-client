@@ -114,7 +114,11 @@ const DasboardMobileMenu = ({ user }) => {
                       size="md"
                       className="cursor-pointer shrink-0"
                     >
-                      <Avatar.Image src={user?.image} alt={user?.name || "User"} referrerPolicy="no-referrer" />
+                      <Avatar.Image
+                        src={user?.image}
+                        alt={user?.name || "User"}
+                        referrerPolicy="no-referrer"
+                      />
                       <Avatar.Fallback delayMs={600}>
                         {user?.name?.slice(0, 2).toUpperCase() || "NH"}
                       </Avatar.Fallback>
@@ -133,7 +137,11 @@ const DasboardMobileMenu = ({ user }) => {
                   <div className="px-3 pt-3 pb-2 border-b border-zinc-800/60 mb-1">
                     <div className="flex items-center gap-2.5">
                       <Avatar size="sm">
-                        <Avatar.Image src={user?.image} alt={user?.name || "User"} referrerPolicy="no-referrer" />
+                        <Avatar.Image
+                          src={user?.image}
+                          alt={user?.name || "User"}
+                          referrerPolicy="no-referrer"
+                        />
                         <Avatar.Fallback delayMs={600}>
                           {user?.name?.slice(0, 2).toUpperCase() || "NH"}
                         </Avatar.Fallback>

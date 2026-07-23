@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -24,7 +24,7 @@ const DashboardSidbar = ({ user }) => {
         },
         onError: (ctx) => {
           toast.error(ctx.error.message || "Logout failed");
-        }
+        },
       },
     });
   };
@@ -33,8 +33,8 @@ const DashboardSidbar = ({ user }) => {
     <aside className="hidden lg:flex flex-col fixed left-0 top-0 bottom-0 w-64 border-r border-zinc-800 bg-black text-zinc-100 z-40">
       {/* Brand Header */}
       <div className="h-16 flex items-center px-6 border-b border-zinc-800">
-        <Link 
-          href="/" 
+        <Link
+          href="/"
           className="text-2xl font-black tracking-tight text-primary select-none hover:text-primary/80 transition-colors duration-300"
         >
           NextHire
@@ -45,9 +45,10 @@ const DashboardSidbar = ({ user }) => {
       <nav className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
         {dashboardNavlinks.map((link) => {
           const Icon = link.icon;
-          const isActive = 
-            pathname === link.href || 
-            (link.href !== `/dashboard/${user?.role}` && pathname.startsWith(link.href));
+          const isActive =
+            pathname === link.href ||
+            (link.href !== `/dashboard/${user?.role}` &&
+              pathname.startsWith(link.href));
 
           return (
             <Link
@@ -64,10 +65,12 @@ const DashboardSidbar = ({ user }) => {
                 <span className="absolute left-0 top-0 bottom-0 w-1 bg-primary " />
               )}
               {Icon && (
-                <Icon 
+                <Icon
                   className={`size-5 transition-transform duration-200 group-hover:scale-110 ${
-                    isActive ? "text-primary" : "text-zinc-400 group-hover:text-zinc-100"
-                  }`} 
+                    isActive
+                      ? "text-primary"
+                      : "text-zinc-400 group-hover:text-zinc-100"
+                  }`}
                 />
               )}
               <span>{link.name}</span>
@@ -87,14 +90,22 @@ const DashboardSidbar = ({ user }) => {
                 size="md"
                 className="cursor-pointer shrink-0"
               >
-                <Avatar.Image src={user?.image} alt={user?.name || "User"} referrerPolicy="no-referrer" />
+                <Avatar.Image
+                  src={user?.image}
+                  alt={user?.name || "User"}
+                  referrerPolicy="no-referrer"
+                />
                 <Avatar.Fallback delayMs={600}>
                   {user?.name?.slice(0, 2).toUpperCase() || "NH"}
                 </Avatar.Fallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-zinc-100 truncate">{user?.name || "User"}</p>
-                <p className="text-xs text-zinc-400 capitalize truncate">{user?.role || "Member"}</p>
+                <p className="text-sm font-semibold text-zinc-100 truncate">
+                  {user?.name || "User"}
+                </p>
+                <p className="text-xs text-zinc-400 capitalize truncate">
+                  {user?.role || "Member"}
+                </p>
               </div>
             </div>
           </Dropdown.Trigger>
@@ -102,7 +113,11 @@ const DashboardSidbar = ({ user }) => {
             <div className="px-3 pt-3 pb-2 border-b border-zinc-800/60 mb-1">
               <div className="flex items-center gap-2.5">
                 <Avatar size="sm">
-                  <Avatar.Image src={user?.image} alt={user?.name || "User"} referrerPolicy="no-referrer" />
+                  <Avatar.Image
+                    src={user?.image}
+                    alt={user?.name || "User"}
+                    referrerPolicy="no-referrer"
+                  />
                   <Avatar.Fallback delayMs={600}>
                     {user?.name?.slice(0, 2).toUpperCase() || "NH"}
                   </Avatar.Fallback>
@@ -118,21 +133,33 @@ const DashboardSidbar = ({ user }) => {
               </div>
             </div>
             <Dropdown.Menu aria-label="User actions">
-              <Dropdown.Item id="profile" textValue="Profile" className="hover:bg-zinc-900/80 rounded-xl transition-colors">
+              <Dropdown.Item
+                id="profile"
+                textValue="Profile"
+                className="hover:bg-zinc-900/80 rounded-xl transition-colors"
+              >
                 <Link
                   href={`/dashboard/${user?.role}/settings`}
                   className="w-full flex items-center justify-between gap-2 text-zinc-300 hover:text-white"
                 >
-                  <Label className="cursor-pointer text-zinc-300">Profile</Label>
+                  <Label className="cursor-pointer text-zinc-300">
+                    Profile
+                  </Label>
                   <FiUser className="size-4 text-zinc-400" />
                 </Link>
               </Dropdown.Item>
-              <Dropdown.Item id="settings" textValue="Settings" className="hover:bg-zinc-900/80 rounded-xl transition-colors">
+              <Dropdown.Item
+                id="settings"
+                textValue="Settings"
+                className="hover:bg-zinc-900/80 rounded-xl transition-colors"
+              >
                 <Link
                   href={`/dashboard/${user?.role}/settings`}
                   className="w-full flex items-center justify-between gap-2 text-zinc-300 hover:text-white"
                 >
-                  <Label className="cursor-pointer text-zinc-300">Settings</Label>
+                  <Label className="cursor-pointer text-zinc-300">
+                    Settings
+                  </Label>
                   <FiSettings className="size-4 text-zinc-400" />
                 </Link>
               </Dropdown.Item>
@@ -144,7 +171,9 @@ const DashboardSidbar = ({ user }) => {
                 className="hover:bg-red-950/40 rounded-xl transition-colors"
               >
                 <div className="flex w-full items-center justify-between gap-2">
-                  <Label className="text-red-400 cursor-pointer font-medium">Log Out</Label>
+                  <Label className="text-red-400 cursor-pointer font-medium">
+                    Log Out
+                  </Label>
                   <FiLogOut className="size-4 text-red-400" />
                 </div>
               </Dropdown.Item>
