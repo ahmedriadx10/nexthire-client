@@ -1,10 +1,6 @@
-import {  Inter,Poppins } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import Navbar from "@/components/ui/Navbar";
-import Footer from "@/components/ui/Footer";
-
-
 
 //optional font import for future use
 // const poppins=Poppins({
@@ -13,30 +9,25 @@ import Footer from "@/components/ui/Footer";
 //   weight: ["400", "500", "600", "700",'800','900'],
 // });
 
-
-const interFont=Inter({
+const interFont = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700",'800','900'],
-})
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata = {
   title: "NextHire",
-  description: "NextHire is a platform that connects job seekers with potential employers, providing tools and resources to streamline the hiring process.",
+  description:
+    "NextHire is a platform that connects job seekers with potential employers, providing tools and resources to streamline the hiring process.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${interFont.className}  h-full antialiased`}
-    >
+    <html lang="en" className={`${interFont.className}  h-full antialiased`}>
       <body className="min-h-full  flex flex-col antialiased ">
-        <Navbar/>
         {children}
-       <Toaster />  
-       <Footer/>
-        </body>
+        <Toaster />
+      </body>
     </html>
   );
 }
