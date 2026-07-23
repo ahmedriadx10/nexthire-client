@@ -90,11 +90,8 @@ const DasboardMobileMenu = ({ user }) => {
             <Drawer.Body className="flex-1 px-4 py-4 space-y-1.5 overflow-y-auto scrollbar-thin scrollbar-thumb-primary">
               {dashboardNavlinks.map((link) => {
                 const Icon = link.icon;
-                const isActive =
-                  pathname === link.href ||
-                  (link.href !== `/dashboard/${user?.role}` &&
-                    pathname.startsWith(link.href));
-
+                const isActive = pathname === link.href;
+                //||  (link.href !== `/dashboard/${user?.role}` && pathname.startsWith(link.href));
                 return (
                   <Link
                     key={link.href}

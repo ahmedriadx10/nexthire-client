@@ -46,10 +46,8 @@ const DashboardSidbar = ({ user }) => {
         {dashboardNavlinks.map((link) => {
           const Icon = link.icon;
           const isActive =
-            pathname === link.href ||
-            (link.href !== `/dashboard/${user?.role}` &&
-              pathname.startsWith(link.href));
-
+            pathname === link.href 
+// ||  (link.href !== `/dashboard/${user?.role}` && pathname.startsWith(link.href));
           return (
             <Link
               key={link.href}

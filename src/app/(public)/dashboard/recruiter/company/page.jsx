@@ -1,5 +1,17 @@
+import CompanyManage from "@/components/dashboard/recruiter-components/CompanyManage";
+import EmptyCompanyStatus from "@/components/dashboard/recruiter-components/EmptyCompanyStatus";
+import { getRecruiterCompany } from "@/lib/api/RecruiterCompany";
+import { getLoggedInUserSession } from "@/lib/core/Session";
 
-const RecruiteMyCompanyPage = () => {
+const RecruiteMyCompanyPage = async() => {
+
+const loggedInRecruiter=await getLoggedInUserSession()
+console.log('user session',loggedInRecruiter)
+
+// Fetch company data for the logged-in recruiter but now i am just taking no company registered for now
+// const companyData=await  getRecruiterCompany(loggedInRecruiter?.id)
+const companyData=false
+console.log('recruiter company data',companyData)
   return (
     <div>
       <h2>Recruiter My Company Page</h2>
@@ -18,6 +30,9 @@ Fields:
 * Short Description
 
 On submit: save to database with status pending. Admin must approve before the company appears publicly. */}
+
+{companyData? <CompanyManage/> : <EmptyCompanyStatus/>}
+
     </div>
   );
 };
