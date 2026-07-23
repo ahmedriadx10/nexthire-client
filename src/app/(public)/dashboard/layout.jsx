@@ -1,22 +1,25 @@
 import DashboardSidbar from "@/components/dashboard/DashboardSidbar";
+import DasboardMobileMenu from "@/components/dashboard/DasboardMobileMenu";
 import { getLoggedInUserSession } from "@/lib/core/Session";
 
-const DashboardLayout =async ({ children }) => {
-
-  const loggedInUserSession=await getLoggedInUserSession()
-console.log('logged in user session is here',loggedInUserSession)
+const DashboardLayout = async ({ children }) => {
+  const loggedInUserSession = await getLoggedInUserSession();
 
   return (
-    // here dashboard layout will be implemented left side will dashboardlink area and right side will be the content area and the content area will be the children of this layout
-    // as if we implement left and ride side ui structure for laptop and desktop view then for  mobile view there will no left side dasbhoardink link area the dashboard link will appear as a top navbar and the content area will be the children of this layout
-    // for mobile view the dashboard link will appear as a top navbar and after clicking hamburger menu the dashboard link will appear as a sidebar
+    <div className="fixed inset-0 w-screen h-screen flex flex-col lg:flex-row bg-black text-zinc-100 z-50 overflow-hidden">
+      {/* Desktop Sidebar (hidden on mobile, persistent on desktop) */}
+      <DashboardSidbar user={loggedInUserSession} />
 
-    <section>
+      {/* Mobile Top Header and Drawer Menu (hidden on desktop) */}
+      <DasboardMobileMenu user={loggedInUserSession} />
 
-      <DashboardSidbar user={loggedInUserSession}/>
-      
-
-      {children}</section>
+      {/* Main Page Content Scroll Container */}
+      <main className="flex-1 flex flex-col min-h-0 bg-zinc-950 lg:pl-64 overflow-y-auto">
+        <div className="flex-1 p-6 md:p-8 lg:p-10">
+          {children}
+        </div>
+      </main>
+    </div>
   );
 };
 
