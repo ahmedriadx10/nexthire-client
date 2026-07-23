@@ -1,45 +1,236 @@
-'use client'
+"use client";
 
 import { useState } from "react";
-import {Button, Drawer} from "@heroui/react";
-const DasboardMobileMenu = () => {
-      const [isOpen, setIsOpen] = useState(false);
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Drawer, Avatar, Dropdown, Label } from "@heroui/react";
+import { roleBasedDashboardNavlinks } from "@/lib/core/management-data";
+import { FiMenu, FiSettings, FiLogOut, FiUser } from "react-icons/fi";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
+
+const DasboardMobileMenu = ({ user }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // Retrieve role-based dashboard links
+  const dashboardNavlinks = roleBasedDashboardNavlinks[user?.role] || [];
+
+  const handleLogOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("Logout successful");
+          router.push("/login");
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message || "Logout failed");
+        },
+      },
+    });
+  };
+
   return (
-    <div>
-              <div className="flex flex-col gap-3">
-        {/* here will the drawer hamberger menu will appear from react icons */}
-     
+    <>
+      {/* Mobile Sticky Navbar Header */}
+      <header className="lg:hidden flex h-16 items-center justify-between px-6 border-b border-zinc-800 bg-black/90 backdrop-blur-md sticky top-0 w-full z-40">
+        <Link
+          href="/"
+          className="text-2xl font-black tracking-tight text-primary select-none hover:text-primary/80 transition-colors"
+        >
+          NextHire
+        </Link>
 
-   <Button size="sm" variant="secondary" onPress={() => setIsOpen(true)}>
-              Open Drawer
-            </Button>
+        <div className="flex items-center gap-3">
+          {user && (
+            <Avatar
+              // color="primary"
+              size="sm"
+              className="cursor-pointer shrink-0"
+              onClick={() => setIsOpen(true)}
+            >
+              <Avatar.Image
+                src={user?.image}
+                alt={user?.name || "User"}
+                referrerPolicy="no-referrer"
+              />
+              <Avatar.Fallback delayMs={600}>
+                {user?.name?.slice(0, 2).toUpperCase() || "NH"}
+              </Avatar.Fallback>
+            </Avatar>
+          )}
 
-{/* the main heroUI drawer */}
+          <button
+            onClick={() => setIsOpen(true)}
+            className="p-2 -mr-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-900/50 transition-colors active:scale-95 focus:outline-none"
+          >
+            <FiMenu className="size-6" />
+          </button>
+        </div>
+      </header>
 
-   <Drawer.Backdrop isOpen={isOpen} onOpenChange={setIsOpen}>
-          <Drawer.Content placement="left">
-            <Drawer.Dialog>
-              <Drawer.CloseTrigger />
-              <Drawer.Header>
-                <Drawer.Heading>Controlled with useState()</Drawer.Heading>
-              </Drawer.Header>
-              <Drawer.Body>
-                <p>
-                  This drawer is controlled by React's <code>useState</code> hook. Pass{" "}
-                  <code>isOpen</code> and <code>onOpenChange</code> props to manage the drawer state
-                  externally.
-                </p>
-              </Drawer.Body>
-              <Drawer.Footer>
-                <Button slot="close" variant="secondary">
-                  Close
-                </Button>
-              </Drawer.Footer>
-            </Drawer.Dialog>
-          </Drawer.Content>
-        </Drawer.Backdrop>
-    </div>
-    </div>
+      {/* HeroUI Drawer */}
+      <Drawer.Backdrop isOpen={isOpen} onOpenChange={setIsOpen}>
+        <Drawer.Content
+          placement="left"
+          className="bg-zinc-950 border-r border-zinc-800 text-zinc-100 max-w-xs h-full shadow-2xl"
+        >
+          <Drawer.Dialog className="bg-zinc-950 flex flex-col h-full overflow-hidden text-zinc-100 outline-none">
+            <Drawer.CloseTrigger className="absolute top-4 right-4 text-zinc-400 hover:text-white cursor-pointer focus:outline-none" />
+
+            {/* Drawer Logo Section */}
+            <Drawer.Header className="px-6 pt-6 pb-4 border-b border-zinc-900/80">
+              <Drawer.Heading className="text-xl font-black text-primary select-none">
+                NextHire
+              </Drawer.Heading>
+            </Drawer.Header>
+
+            {/* Drawer Navigation Links */}
+            <Drawer.Body className="flex-1 px-4 py-4 space-y-1.5 overflow-y-auto scrollbar-thin scrollbar-thumb-primary">
+              {dashboardNavlinks.map((link) => {
+                const Icon = link.icon;
+                const isActive =
+                  pathname === link.href ||
+                  (link.href !== `/dashboard/${user?.role}` &&
+                    pathname.startsWith(link.href));
+
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative overflow-hidden ${
+                      isActive
+                        ? "bg-primary/10 text-primary"
+                        : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/50"
+                    }`}
+                  >
+                    {isActive && (
+                      <span className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r" />
+                    )}
+                    {Icon && (
+                      <Icon
+                        className={`size-5 transition-transform duration-200 group-hover:scale-110 ${
+                          isActive
+                            ? "text-primary"
+                            : "text-zinc-400 group-hover:text-zinc-100"
+                        }`}
+                      />
+                    )}
+                    <span>{link.name}</span>
+                  </Link>
+                );
+              })}
+            </Drawer.Body>
+
+            {/* Drawer Profile block */}
+            <Drawer.Footer className="p-4 border-t border-zinc-900/80 bg-zinc-950">
+              <Dropdown className="bg-zinc-950 border border-zinc-800 rounded-2xl">
+                <Dropdown.Trigger className="w-full text-left rounded-xl hover:bg-zinc-900/60 p-2 transition-colors cursor-pointer outline-none">
+                  <div className="flex items-center gap-3">
+                    <Avatar
+                      color="primary"
+                      size="md"
+                      className="cursor-pointer shrink-0"
+                    >
+                      <Avatar.Image
+                        src={user?.image}
+                        alt={user?.name || "User"}
+                        referrerPolicy="no-referrer"
+                      />
+                      <Avatar.Fallback delayMs={600}>
+                        {user?.name?.slice(0, 2).toUpperCase() || "NH"}
+                      </Avatar.Fallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-zinc-100 truncate">
+                        {user?.name || "User"}
+                      </p>
+                      <p className="text-xs text-zinc-400 capitalize truncate">
+                        {user?.role || "Member"}
+                      </p>
+                    </div>
+                  </div>
+                </Dropdown.Trigger>
+                <Dropdown.Popover className="mr-2.5 rounded-2xl bg-zinc-950 border border-zinc-800 p-1">
+                  <div className="px-3 pt-3 pb-2 border-b border-zinc-800/60 mb-1">
+                    <div className="flex items-center gap-2.5">
+                      <Avatar size="sm">
+                        <Avatar.Image
+                          src={user?.image}
+                          alt={user?.name || "User"}
+                          referrerPolicy="no-referrer"
+                        />
+                        <Avatar.Fallback delayMs={600}>
+                          {user?.name?.slice(0, 2).toUpperCase() || "NH"}
+                        </Avatar.Fallback>
+                      </Avatar>
+                      <div className="flex flex-col gap-0.5 min-w-0">
+                        <p className="text-xs leading-none font-semibold text-zinc-100 truncate">
+                          {user?.name || "User"}
+                        </p>
+                        <p className="text-[10px] leading-none text-zinc-400 truncate">
+                          {user?.email || ""}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <Dropdown.Menu aria-label="User actions mobile">
+                    <Dropdown.Item
+                      id="profile"
+                      textValue="Profile"
+                      className="hover:bg-zinc-900/80 rounded-xl transition-colors"
+                    >
+                      <Link
+                        href={`/dashboard/${user?.role}/settings`}
+                        onClick={() => setIsOpen(false)}
+                        className="w-full flex items-center justify-between gap-2 text-zinc-300 hover:text-white"
+                      >
+                        <Label className="cursor-pointer text-zinc-300">
+                          Profile
+                        </Label>
+                        <FiUser className="size-4 text-zinc-400" />
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      id="settings"
+                      textValue="Settings"
+                      className="hover:bg-zinc-900/80 rounded-xl transition-colors"
+                    >
+                      <Link
+                        href={`/dashboard/${user?.role}/settings`}
+                        onClick={() => setIsOpen(false)}
+                        className="w-full flex items-center justify-between gap-2 text-zinc-300 hover:text-white"
+                      >
+                        <Label className="cursor-pointer text-zinc-300">
+                          Settings
+                        </Label>
+                        <FiSettings className="size-4 text-zinc-400" />
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      id="logout"
+                      textValue="Logout"
+                      variant="danger"
+                      onPress={handleLogOut}
+                      className="hover:bg-red-950/40 rounded-xl transition-colors"
+                    >
+                      <div className="flex w-full items-center justify-between gap-2">
+                        <Label className="text-red-400 cursor-pointer font-medium">
+                          Log Out
+                        </Label>
+                        <FiLogOut className="size-4 text-red-400" />
+                      </div>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown.Popover>
+              </Dropdown>
+            </Drawer.Footer>
+          </Drawer.Dialog>
+        </Drawer.Content>
+      </Drawer.Backdrop>
+    </>
   );
 };
 
