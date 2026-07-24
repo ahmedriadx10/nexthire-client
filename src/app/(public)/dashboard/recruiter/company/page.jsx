@@ -7,12 +7,12 @@ const RecruiteMyCompanyPage = async () => {
   const loggedInRecruiter = await getLoggedInUserSession();
   // console.log('user session',loggedInRecruiter)
 
-  const companyData = await getRecruiterCompany(loggedInRecruiter?.id);
+  const recruiterCompanyData = await getRecruiterCompany(loggedInRecruiter?.id);
 
-  // console.log('recruiter company data',companyData)
+  // console.log("recruiter company data", recruiterCompanyData);
   return (
     <div className=" px-4 py-8 text-white">
-      {!companyData && (
+      {!recruiterCompanyData?.isExistCompany && (
         <div className="mb-8 border-b border-zinc-900 pb-6">
           <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">
             My Company
@@ -24,8 +24,8 @@ const RecruiteMyCompanyPage = async () => {
         </div>
       )}
 
-      {companyData ? (
-        <CompanyManage company={companyData} />
+      {recruiterCompanyData?.isExistCompany ? (
+        <CompanyManage company={recruiterCompanyData?.companyData} />
       ) : (
         <EmptyCompanyStatus user={loggedInRecruiter} />
       )}
