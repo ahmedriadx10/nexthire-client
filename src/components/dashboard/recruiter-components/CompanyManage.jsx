@@ -19,6 +19,27 @@ const CompanyManage = ({ company }) => {
     return url.replace(/^(https?:\/\/)?(www\.)?/, "").replace(/\/$/, "");
   };
 
+  // Helper to determine status badge styling
+  const getStatusBadge = (status) => {
+    const s = status?.toLowerCase() || "pending";
+    if (s === "approved" || s === "verified" || s === "active") {
+      return {
+        text: "Approved",
+        className: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+      };
+    }
+    if (s === "rejected" || s === "declined") {
+      return {
+        text: "Rejected",
+        className: "bg-rose-500/10 text-rose-400 border-rose-500/20",
+      };
+    }
+    return {
+      text: "Pending",
+      className: "bg-amber-500/10 text-amber-400 border-amber-500/20 animate-pulse",
+    };
+  };
+
   return (
     <div className="max-w-6xl mx-auto pb-12 select-none">
       {/* Header Container */}
@@ -53,10 +74,15 @@ const CompanyManage = ({ company }) => {
                   {company.industry}
                 </span>
               )}
-              {company?.location && (
-                <span className="text-[10px] sm:text-xs font-semibold bg-zinc-800/80 text-zinc-300 border border-zinc-700/50 px-3 py-0.5 rounded-full tracking-wide">
-                  {company.location.toUpperCase() === "USA" ? "USA-Based" : `${company.location}-Based`}
-                </span>
+              {company?.status && (
+                (() => {
+                  const badge = getStatusBadge(company.status);
+                  return (
+                    <span className={`text-[10px] sm:text-xs font-semibold border px-3 py-0.5 rounded-full tracking-wide ${badge.className}`}>
+                      {badge.text}
+                    </span>
+                  );
+                })()
               )}
             </div>
 
