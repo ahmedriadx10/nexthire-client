@@ -7,6 +7,7 @@ import {
   RiCodeSSlashLine
 } from "react-icons/ri";
 
+
 const opportunities = [
   {
     id: 1,
@@ -80,8 +81,9 @@ const FeaturedOpportunities = () => {
             Smart Job Discovery
           </span>
           <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
-            Featured Opportunities
-          </h2>
+ Featured Opportunities
+
+           </h2>
         </div>
         <Link
           href="/browse-jobs"
