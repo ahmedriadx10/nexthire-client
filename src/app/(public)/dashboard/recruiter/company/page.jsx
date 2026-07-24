@@ -3,36 +3,32 @@ import EmptyCompanyStatus from "@/components/dashboard/recruiter-components/Empt
 import { getRecruiterCompany } from "@/lib/api/RecruiterCompany";
 import { getLoggedInUserSession } from "@/lib/core/Session";
 
-const RecruiteMyCompanyPage = async() => {
+const RecruiteMyCompanyPage = async () => {
+  const loggedInRecruiter = await getLoggedInUserSession();
+  // console.log('user session',loggedInRecruiter)
 
-const loggedInRecruiter=await getLoggedInUserSession()
-console.log('user session',loggedInRecruiter)
+  const companyData = await getRecruiterCompany(loggedInRecruiter?.id);
 
-// Fetch company data for the logged-in recruiter but now i am just taking no company registered for now
-// const companyData=await  getRecruiterCompany(loggedInRecruiter?.id)
-const companyData=false
-console.log('recruiter company data',companyData)
+  // console.log('recruiter company data',companyData)
   return (
-    <div>
-      <h2>Recruiter My Company Page</h2>
-      {/* * If no company is registered: Show a prompt and a "Register Company" button.  
-* If registered: Show company details — name, logo, industry, location, employee count, description.  
-* Edit button to update company information.  
-* Company status badge: Pending / Approved / Rejected (set by Admin).
+    <div className=" px-4 py-8 text-white">
+      {!companyData && (
+        <div className="mb-8 border-b border-zinc-900 pb-6">
+          <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">
+            My Company
+          </h1>
+          <p className="text-sm text-zinc-400 font-light">
+            Manage your organization&apos;s profile details, branding assets,
+            and verification status.
+          </p>
+        </div>
+      )}
 
-### **Register / Edit Company Form**
-
-Fields:
-
-* Company Name, Industry/Category, Website URL  
-* Location, Employee Count Range  
-* Company Logo (image upload)  
-* Short Description
-
-On submit: save to database with status pending. Admin must approve before the company appears publicly. */}
-
-{companyData? <CompanyManage/> : <EmptyCompanyStatus/>}
-
+      {companyData ? (
+        <CompanyManage company={companyData} />
+      ) : (
+        <EmptyCompanyStatus user={loggedInRecruiter} />
+      )}
     </div>
   );
 };
