@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FiExternalLink, FiMapPin } from "react-icons/fi";
+import RecruiterCompanyUpdateModal from "./RecruiterCompanyUpdateModal";
 
 const CompanyManage = ({ company }) => {
   // Helper to extract initials for the recruiter avatar placeholder
@@ -104,8 +105,9 @@ const CompanyManage = ({ company }) => {
           </div>
         </div>
 
-        {/* CTA Post Job Button */}
-        <div className="flex items-center md:self-center shrink-0">
+        {/* CTA Buttons */}
+        <div className="flex items-center gap-3 md:self-center shrink-0">
+          <RecruiterCompanyUpdateModal key={company?.id || company?._id} company={company} />
           <Link href="/dashboard/recruiter/jobs/new">
             <button className="bg-primary text-zinc-950 hover:bg-primary/90 font-bold px-6 py-3 rounded-xl shadow-lg shadow-primary/10 hover:shadow-primary/30 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
               Post a Job
