@@ -38,7 +38,7 @@ const RecruiterNewJobPostPage = async () => {
         />
       ) : (
         // Company is approved — show the job post form
-        <RecruiterJobPost company={companyData} />
+        <RecruiterJobPost company={companyData} user={recruiterWithCompanyData?.loggedInRecruiter} />
       )}
     </div>
   );

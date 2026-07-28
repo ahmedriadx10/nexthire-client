@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -134,7 +133,6 @@ const HeroSelect = ({
       {required && <span className="text-primary ml-1">*</span>}
     </Label>
     <Select
-
       isRequired={required}
       name={name}
       placeholder={placeholder}
@@ -168,7 +166,7 @@ const HeroSelect = ({
 
 // ─── Main Component ────────────────────────────────────────────────────────
 
-const RecruiterJobPost = ({ company }) => {
+const RecruiterJobPost = ({ company,user }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isRemote, setIsRemote] = useState(false);
@@ -287,18 +285,25 @@ const RecruiterJobPost = ({ company }) => {
         ...formData,
         isRemote,
         location: isRemote
-          ? "Remote"
-          : `${formData.city.trim()}, ${formData.country.trim()}`,
+          ? "Remote"     : `${formData.city.trim()}, ${formData.country.trim()}`,
         salaryMin: parseFloat(formData.salaryMin),
         salaryMax: parseFloat(formData.salaryMax),
         companyId: company?._id || company?.id,
         companyName: company?.name,
-        status: "active",
+        recruiterId:user?.id,
+        recruiterEmail:user?.email
+ 
       };
 
+console.log("Submitting job post payload:", payload);
+
+     
       const result = await createRecruiterJob(payload);
 
-      if (result?.success || result?._id || result?.id) {
+console.log("Job post API response:", result);
+
+
+      if (result?.acknowledged || result?.insertedId) {
         toast.success("Job post published successfully! 🎉", { id: toastId });
         router.push("/dashboard/recruiter/jobs");
         router.refresh();
@@ -379,11 +384,7 @@ const RecruiterJobPost = ({ company }) => {
           step={1}
         >
           {/* Job Title */}
-          <TextField
-            isRequired
-            name="jobTitle"
-            className="flex flex-col gap-2"
-          >
+          <TextField isRequired name="jobTitle" className="flex flex-col gap-2">
             <Label className={labelCls}>
               Job Title <span className="text-primary">*</span>
             </Label>
@@ -575,11 +576,7 @@ const RecruiterJobPost = ({ company }) => {
           {/* City & Country — only visible when not remote */}
           {!isRemote && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <TextField
-                isRequired
-                name="city"
-                className="flex flex-col gap-2"
-              >
+              <TextField isRequired name="city" className="flex flex-col gap-2">
                 <Label className={labelCls}>
                   City <span className="text-primary">*</span>
                 </Label>
