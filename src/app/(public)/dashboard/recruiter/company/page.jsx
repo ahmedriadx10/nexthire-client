@@ -1,18 +1,19 @@
 import CompanyManage from "@/components/dashboard/recruiter-components/CompanyManage";
 import EmptyCompanyStatus from "@/components/dashboard/recruiter-components/EmptyCompanyStatus";
-import { getRecruiterCompany } from "@/lib/api/RecruiterCompany";
-import { getLoggedInUserSession } from "@/lib/core/Session";
+import {
+ 
+  getRecruiterWithCompany,
+} from "@/lib/api/RecruiterCompany";
+
 
 const RecruiteMyCompanyPage = async () => {
-  const loggedInRecruiter = await getLoggedInUserSession();
-  // console.log('user session',loggedInRecruiter)
+  const recruiterDataWithCompany = await getRecruiterWithCompany();
 
-  const recruiterCompanyData = await getRecruiterCompany(loggedInRecruiter?.id);
+  // console.log("recriter data with company here", recruiterDataWithCompany);
 
-  // console.log("recruiter company data", recruiterCompanyData);
   return (
     <div className=" px-4 py-8 text-white">
-      {!recruiterCompanyData?.isExistCompany && (
+      {!recruiterDataWithCompany?.recruiterCompany?.isExistCompany && (
         <div className="mb-8 border-b border-zinc-900 pb-6">
           <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">
             My Company
@@ -24,10 +25,14 @@ const RecruiteMyCompanyPage = async () => {
         </div>
       )}
 
-      {recruiterCompanyData?.isExistCompany ? (
-        <CompanyManage company={recruiterCompanyData?.companyData} />
+      {recruiterDataWithCompany?.recruiterCompany?.isExistCompany ? (
+        <CompanyManage
+          company={recruiterDataWithCompany?.recruiterCompany?.companyData}
+        />
       ) : (
-        <EmptyCompanyStatus user={loggedInRecruiter} />
+        <EmptyCompanyStatus
+          user={recruiterDataWithCompany?.loggedInRecruiter}
+        />
       )}
     </div>
   );
