@@ -9,7 +9,7 @@ import {
 const RecruiteMyCompanyPage = async () => {
   const recruiterDataWithCompany = await getRecruiterWithCompany();
 
-  // console.log("recriter data with company here", recruiterDataWithCompany);
+  console.log("recriter data with company here", recruiterDataWithCompany);
 
   return (
     <div className=" px-4 py-8 text-white">
