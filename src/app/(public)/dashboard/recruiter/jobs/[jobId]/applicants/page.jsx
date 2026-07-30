@@ -1,5 +1,9 @@
 
-const RecruiterJobPostApplicatsViewPage = () => {
+const RecruiterJobPostApplicatsViewPage =async ({params}) => {
+ 
+ const {jobId}=await params
+
+ 
   return (
     <div>
 <h2> recrutier will appear in this page via link and here i will get the job id dynamic params and will load specific job applicants who applied the specific job.</h2>
