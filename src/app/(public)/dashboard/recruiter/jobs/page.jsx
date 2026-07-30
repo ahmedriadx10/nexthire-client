@@ -67,6 +67,8 @@ const RecruiterManageJobsPage = async ({ searchParams }) => {
   const data = await getRecruiterJobs(user?.id, currentPage);
   const jobs = data?.jobs ?? [];
   const totalJobs = data?.totalJobs ?? 0;
+  const activeJobs=data?.activeJobs ?? 0;
+  const closedJobs=data?.closedJobs ?? 0;
   const totalPages = Math.max(1, Math.ceil(totalJobs / JOBS_PER_PAGE));
 
   return (
@@ -128,7 +130,7 @@ const RecruiterManageJobsPage = async ({ searchParams }) => {
             Active
           </p>
           <p className="text-emerald-400 text-xl font-extrabold">
-            {jobs.filter((j) => j.status === "active").length}
+            {activeJobs}
           </p>
         </div>
 
@@ -137,7 +139,7 @@ const RecruiterManageJobsPage = async ({ searchParams }) => {
             Closed
           </p>
           <p className="text-zinc-400 text-xl font-extrabold">
-            {jobs.filter((j) => j.status === "closed").length}
+            {closedJobs}
           </p>
         </div>
 
