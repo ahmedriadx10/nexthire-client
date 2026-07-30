@@ -19,8 +19,9 @@ const DashboardSidbar = ({ user }) => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
+          router.push('/login')
           toast.success("Logout successful");
-          router.push("/login");
+         
         },
         onError: (ctx) => {
           toast.error(ctx.error.message || "Logout failed");

@@ -50,8 +50,9 @@ const NavbarManage = ({ activeUser }) => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
+          router.push('/login')
           toast.success("Logut successful");
-          router.push("/login");
+         
         },
       },
     });
