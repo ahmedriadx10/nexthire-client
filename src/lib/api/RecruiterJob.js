@@ -1,3 +1,4 @@
+
 import { protectedFetchData, serverMutation } from "../core/server-manage";
 
 /**
@@ -18,3 +19,9 @@ export const createRecruiterJob = async (jobData) => {
 export const getRecruiterJobs = async (recruiterId, page = 1) => {
   return protectedFetchData(`/recruiter/jobs/${recruiterId}?page=${page}`);
 };
+
+
+
+export const getRecruiterJobById=async (jobId)=>{
+  return protectedFetchData(`/recruiter/job/${jobId}`)
+}

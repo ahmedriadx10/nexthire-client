@@ -1,13 +1,14 @@
+import { getRecruiterJobById } from "@/lib/api/RecruiterJob";
+import RecruiterJobEdit from "@/components/dashboard/recruiter-components/RecruiterJobEdit";
 
-const RecruiterJobPostUpdatePage = async({params}) => {
+const RecruiterJobPostUpdatePage = async ({ params }) => {
+  const { jobId } = await params;
 
-  const {jobId}=await params
-
-  console.log('jobId for edit specific job',jobId)
+  const jobData = await getRecruiterJobById(jobId);
 
   return (
     <div>
-      
+      <RecruiterJobEdit jobData={jobData} />
     </div>
   );
 };

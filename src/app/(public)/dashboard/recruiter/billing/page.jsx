@@ -8,6 +8,8 @@ const RecruiterSubscriptionAndBillingPage = () => {
 * Payment history table with: Date, Plan, Amount, Transaction ID.  
 * Stripe-integrated card payment on upgrade.  
 * On successful payment: save payment record, activate the new plan (raising the active job limit), show a success toast. */}
+
+
     </div>
   );
 };
