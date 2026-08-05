@@ -25,8 +25,11 @@ import {
   FiToggleLeft,
   FiToggleRight,
   FiChevronDown,
+  FiEdit3,
+  FiAlertCircle,
 } from "react-icons/fi";
-import { createRecruiterJob } from "@/lib/api/RecruiterJob";
+import { updateJobStatusOrDetails } from "@/lib/actions/recruiter-action/jobActions";
+import Link from "next/link";
 
 // ─── Static Options ────────────────────────────────────────────────────────
 
@@ -63,6 +66,11 @@ const EXPERIENCE_LEVELS = [
   "Mid-Level (3–5 yrs)",
   "Senior (5–8 yrs)",
   "Lead / Principal (8+ yrs)",
+];
+
+const JOB_STATUSES = [
+  { value: "active", label: "Active", color: "emerald" },
+  { value: "closed", label: "Closed", color: "rose" },
 ];
 
 // ─── Shared class strings ──────────────────────────────────────────────────
@@ -115,7 +123,7 @@ const FormSection = ({ icon: Icon, title, subtitle, children, step }) => (
   </div>
 );
 
-// ─── HeroUI Select helper (renders the full compound component) ────────────
+// ─── HeroUI Select helper ──────────────────────────────────────────────────
 
 const HeroSelect = ({
   label,
@@ -164,27 +172,43 @@ const HeroSelect = ({
   </div>
 );
 
+// ─── Status badge helper ───────────────────────────────────────────────────
+
+const statusStyles = {
+  active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  closed: "bg-rose-500/10 text-rose-400 border-rose-500/20",
+  draft: "bg-zinc-700/40 text-zinc-400 border-zinc-600/30",
+};
+
 // ─── Main Component ────────────────────────────────────────────────────────
 
-const RecruiterJobPost = ({ company,user }) => {
+const RecruiterJobEdit = ({ jobData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [isRemote, setIsRemote] = useState(false);
 
+  // ── Derive initial isRemote from jobData ──────────────────────────────────
+  const [isRemote, setIsRemote] = useState(
+    jobData?.isRemote ?? jobData?.jobType === "remote",
+  );
+
+  // ── Pre-fill form state from existing jobData ─────────────────────────────
   const [formData, setFormData] = useState({
-    jobTitle: "",
-    jobCategory: "",
-    jobType: "",
-    experienceLevel: "",
-    salaryMin: "",
-    salaryMax: "",
-    currency: "USD",
-    city: "",
-    country: "",
-    applicationDeadline: "",
-    responsibilities: "",
-    requirements: "",
-    benefits: "",
+    jobTitle: jobData?.jobTitle ?? "",
+    jobCategory: jobData?.jobCategory ?? "",
+    jobType: jobData?.jobType ?? "",
+    experienceLevel: jobData?.experienceLevel ?? "",
+    salaryMin:
+      jobData?.salaryMin !== undefined ? String(jobData.salaryMin) : "",
+    salaryMax:
+      jobData?.salaryMax !== undefined ? String(jobData.salaryMax) : "",
+    currency: jobData?.currency ?? "USD",
+    city: jobData?.city ?? "",
+    country: jobData?.country ?? "",
+    applicationDeadline: jobData?.applicationDeadline ?? "",
+    responsibilities: jobData?.responsibilities ?? "",
+    requirements: jobData?.requirements ?? "",
+    benefits: jobData?.benefits ?? "",
+    status: jobData?.status ?? "active",
   });
 
   // ── Handlers ──────────────────────────────────────────────────────────────
@@ -196,13 +220,12 @@ const RecruiterJobPost = ({ company,user }) => {
 
   const handleJobTypeSelect = (value) => {
     setFormData((prev) => ({ ...prev, jobType: value }));
-    // if (value === "remote") setIsRemote(true);
+    // if(value==='remote)setIsRemote(true);
     // REFACTOR: Combine the above two lines into one conditional statement to avoid redundant state updates.
-    if(value==='remote'){
+    if (value === "remote") {
       setFormData((prev) => ({ ...prev, city: "", country: "" }));
       setIsRemote(true);
-    }
-    else setIsRemote(false);
+    } else setIsRemote(false);
   };
 
   const handleRemoteToggle = () => {
@@ -268,11 +291,13 @@ const RecruiterJobPost = ({ company,user }) => {
       toast.error("Minimum salary cannot exceed maximum salary.");
       return false;
     }
-    const deadline = new Date(formData.applicationDeadline);
+
+    const deadline = new Date(formData?.applicationDeadline);
     if (deadline <= new Date()) {
       toast.error("Application deadline must be a future date.");
       return false;
     }
+
     return true;
   };
 
@@ -283,42 +308,33 @@ const RecruiterJobPost = ({ company,user }) => {
     if (!validate()) return;
 
     setLoading(true);
-    const toastId = toast.loading("Publishing your job post…");
+    const toastId = toast.loading("Saving your changes…");
 
     try {
       const payload = {
         ...formData,
         isRemote,
         location: isRemote
-          ? "Remote"     : `${formData.city.trim()}, ${formData.country.trim()}`,
+          ? "Remote"
+          : `${formData.city.trim()}, ${formData.country.trim()}`,
         salaryMin: parseFloat(formData.salaryMin),
         salaryMax: parseFloat(formData.salaryMax),
-        companyId: company?._id || company?.id,
-        companyName: company?.name,
-        recruiterId:user?.id,
-        recruiterEmail:user?.email
- 
       };
 
-console.log("Submitting job post payload:", payload);
+      const jobId = jobData?._id;
+      const result = await updateJobStatusOrDetails(jobId, payload);
 
-     
-      const result = await createRecruiterJob(payload);
-
-console.log("Job post API response:", result);
-
-
-      if (result?.acknowledged || result?.insertedId) {
-        toast.success("Job post published successfully! 🎉", { id: toastId });
+      if (result?.modifiedCount > 0 || result?.acknowledged) {
+        toast.success("Job post updated successfully! ✅", { id: toastId });
         router.push("/dashboard/recruiter/jobs");
-        router.refresh();
+        // router.refresh();
       } else {
-        toast.error(result?.message || "Failed to publish job post.", {
+        toast.error(result?.message || "Failed to update job post.", {
           id: toastId,
         });
       }
     } catch (error) {
-      console.error("Job post error:", error);
+      console.error("Job edit error:", error);
       toast.error("Something went wrong. Please try again.", { id: toastId });
     } finally {
       setLoading(false);
@@ -336,48 +352,56 @@ console.log("Job post API response:", result);
             Recruiter Dashboard
           </span>
           <FiChevronRight className="text-zinc-700 text-xs" />
+          <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">
+            Manage Jobs
+          </span>
+          <FiChevronRight className="text-zinc-700 text-xs" />
           <span className="text-[10px] font-black text-primary uppercase tracking-widest">
-            Post a Job
+            Edit Job
           </span>
         </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-none mb-2">
-          Post a New Job
-        </h1>
-        <p className="text-zinc-400 text-sm font-light">
-          Fill in the details below. Your listing will go live immediately after
-          submission.
-        </p>
-      </div>
-
-      {/* Company Info Bar */}
-      {company && (
-        <div className="flex items-center gap-3 bg-zinc-900/40 border border-zinc-800/60 rounded-2xl px-5 py-4 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700/50 flex items-center justify-center shrink-0 overflow-hidden">
-            {company?.logo ? (
-              <img
-                src={company.logo}
-                alt={company?.name}
-                className="w-full h-full object-contain"
-              />
-            ) : (
-              <span className="text-primary font-black text-lg">
-                {company?.name?.[0] || "C"}
-              </span>
-            )}
-          </div>
+        <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
-            <p className="text-white text-sm font-bold">{company?.name}</p>
-            <p className="text-zinc-500 text-xs font-light">
-              {company?.industry} · {company?.location}
+            <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-none mb-2">
+              Edit Job Post
+            </h1>
+            <p className="text-zinc-400 text-sm font-light">
+              Update the details below. Changes will be reflected immediately
+              after saving.
             </p>
           </div>
-          <div className="ml-auto">
-            <span className="text-[10px] font-bold uppercase tracking-widest bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full">
-              Approved
-            </span>
-          </div>
+          {/* Current status badge */}
+          <span
+            className={`text-[10px] font-bold uppercase tracking-widest border px-3 py-1.5 rounded-full self-start mt-1 ${
+              statusStyles[formData.status] ?? statusStyles.draft
+            }`}
+          >
+            {formData.status}
+          </span>
         </div>
-      )}
+      </div>
+
+      {/* Job Identity Bar */}
+      <div className="flex items-center gap-3 bg-zinc-900/40 border border-zinc-800/60 rounded-2xl px-5 py-4 mb-8">
+        <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+          <FiEdit3 className="text-primary text-base" />
+        </div>
+        <div>
+          <p className="text-white text-sm font-bold">
+            {jobData?.jobTitle || "Untitled Job"}
+          </p>
+          <p className="text-zinc-500 text-xs font-light">
+            {jobData?.companyName} ·{" "}
+            {jobData?.location || (jobData?.isRemote ? "Remote" : "—")}
+          </p>
+        </div>
+        <div className="ml-auto flex items-center gap-1.5 text-amber-400/80 bg-amber-400/5 border border-amber-400/20 rounded-xl px-3 py-2">
+          <FiAlertCircle className="text-xs shrink-0" />
+          <span className="text-[10px] font-semibold uppercase tracking-widest">
+            Editing mode
+          </span>
+        </div>
+      </div>
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -465,6 +489,41 @@ console.log("Job post API response:", result);
               })}
             </div>
           </div>
+
+          {/* Status Selector */}
+          <div className="flex flex-col gap-2">
+            <Label className={labelCls}>Job Status</Label>
+            <div className="flex flex-wrap gap-2">
+              {JOB_STATUSES.map(({ value, label }) => {
+                const selected = formData.status === value;
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() =>
+                      setFormData((prev) => ({ ...prev, status: value }))
+                    }
+                    disabled={loading}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all duration-200 cursor-pointer ${
+                      selected
+                        ? value === "active"
+                          ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40 shadow-md shadow-emerald-500/10"
+                          : value === "closed"
+                            ? "bg-rose-500/20 text-rose-400 border-rose-500/40 shadow-md shadow-rose-500/10"
+                            : "bg-zinc-700/40 text-zinc-300 border-zinc-600/50"
+                        : "bg-zinc-900/60 text-zinc-500 border-zinc-800 hover:border-zinc-600 hover:text-zinc-300"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-zinc-600 text-xs font-light">
+              Setting to &quot;Closed&quot; will hide this listing from job
+              seekers.
+            </p>
+          </div>
         </FormSection>
 
         {/* ── Section 2: Salary & Location ── */}
@@ -474,7 +533,7 @@ console.log("Job post API response:", result);
           subtitle="Set the compensation and where this role is based."
           step={2}
         >
-          {/* Salary Range — InputGroup pattern: prefix + Input */}
+          {/* Salary Range */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {/* Min Salary */}
             <TextField
@@ -641,7 +700,6 @@ console.log("Job post API response:", result);
               <Input
                 type="date"
                 className={`${inputCls} pr-10`}
-                min={new Date().toISOString().split("T")[0]}
                 value={formData.applicationDeadline}
                 onChange={(e) =>
                   setFormData((prev) => ({
@@ -726,34 +784,36 @@ console.log("Job post API response:", result);
         <div className="flex items-start gap-3 bg-primary/5 border border-primary/20 rounded-2xl px-5 py-4">
           <FiInfo className="text-primary text-base shrink-0 mt-0.5" />
           <p className="text-zinc-400 text-xs font-light leading-relaxed">
-            <span className="text-primary font-semibold">Heads up:</span> Once
-            submitted, your job post will be{" "}
+            <span className="text-primary font-semibold">Note:</span> Your
+            changes will be{" "}
             <span className="text-white font-semibold">
-              immediately visible
+              immediately reflected
             </span>{" "}
-            to all seekers on NextHire. You can manage, edit, or close the
-            listing from{" "}
-            <span className="text-primary font-semibold">Manage Jobs</span>.
+            for all job seekers browsing NextHire. You can return to{" "}
+            <span className="text-primary font-semibold">
+              <Link href="/dashboard/recruiter/jobs">Manage Jobs</Link>
+            </span>{" "}
+            at any time to make further edits.
           </p>
         </div>
 
-        {/* ── Submit & Cancel ── */}
+        {/* ── Save & Cancel ── */}
         <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
           <button
             type="submit"
             disabled={loading}
             className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 bg-primary text-zinc-950 hover:bg-primary/90 font-extrabold px-8 py-4 rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100 cursor-pointer text-sm"
-            id="submit-job-post"
+            id="save-job-edit"
           >
             {loading ? (
               <>
                 <FiLoader className="animate-spin text-base" />
-                Publishing…
+                Saving…
               </>
             ) : (
               <>
                 <FiCheckCircle className="text-base" />
-                Publish Job Post
+                Save Changes
               </>
             )}
           </button>
@@ -772,4 +832,4 @@ console.log("Job post API response:", result);
   );
 };
 
-export default RecruiterJobPost;
+export default RecruiterJobEdit;
