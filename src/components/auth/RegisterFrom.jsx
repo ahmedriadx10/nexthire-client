@@ -10,7 +10,7 @@ import {
   Spinner,
   TextField,
 } from "@heroui/react";
-import { FiSearch, FiBriefcase, FiArrowRight } from "react-icons/fi";
+import { FiSearch, FiBriefcase, FiArrowRight, FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
@@ -19,6 +19,7 @@ import { redirect } from "next/navigation";
 const RegisterForm = () => {
   const [role, setRole] = useState("seeker");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -124,7 +125,7 @@ const result=await authClient.signIn.social({
           isRequired
           minLength={8}
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           className="flex flex-col w-full"
           validate={(value) => {
             if (value.length < 8) {
@@ -142,11 +143,25 @@ const result=await authClient.signIn.social({
           <Label className="text-[11px] font-semibold text-zinc-400 tracking-wider uppercase mb-1.5 block">
             Password
           </Label>
-          <Input
-            type="password"
-            placeholder="••••••••"
-            className="w-full h-11 px-3.5 rounded-lg bg-[#141416]/90 border border-zinc-800 text-white placeholder-zinc-650 focus:outline-none focus:border-primary/80 focus:ring-1 focus:ring-primary/80 transition-all text-sm font-light"
-          />
+          <div className="relative w-full">
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="••••••••"
+              className="w-full h-11 pl-3.5 pr-11 rounded-lg bg-[#141416]/90 border border-zinc-800 text-white placeholder-zinc-650 focus:outline-none focus:border-primary/80 focus:ring-1 focus:ring-primary/80 transition-all text-sm font-light"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-primary transition-colors duration-200 focus:outline-none"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? (
+                <FiEyeOff className="text-base" />
+              ) : (
+                <FiEye className="text-base" />
+              )}
+            </button>
+          </div>
           <FieldError className="text-[11px] text-red-400 mt-1 block font-medium" />
         </TextField>
 
