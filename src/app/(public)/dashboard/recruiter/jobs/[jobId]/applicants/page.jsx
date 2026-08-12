@@ -11,6 +11,7 @@ const RecruiterJobPostApplicatsViewPage =async ({params}) => {
 * Table columns: Applicant Name, Email, Date Applied, Resume link, Status.  
 * Status dropdown per applicant: Applied → Under Review → Shortlisted → Rejected → Offered.  
 * Changing status sends an email notification to the applicant. */}
+
     </div>
   );
 };
