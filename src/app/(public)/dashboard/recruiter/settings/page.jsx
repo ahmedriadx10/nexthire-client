@@ -11,6 +11,8 @@ export const metadata = {
 const RecruiterProfileSettingsPage = async () => {
   const { recruiterData, recruiterProfile } = await getRecruiterWithProfile();
 
+
+
   return (
     <div className="max-w-6xl mx-auto pb-12 select-none">
       {/* ── Page Header ── */}
@@ -24,14 +26,14 @@ const RecruiterProfileSettingsPage = async () => {
       </div>
 
       {/* ── Two-column layout ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
         {/* Left: Account Info (read-only) */}
-        <div className="lg:col-span-4">
+        <div className="xl:col-span-4">
           <RecruiterAccountCard recruiterData={recruiterData} />
         </div>
 
         {/* Right: Profile Details (editable) */}
-        <div className="lg:col-span-8">
+        <div className="xl:col-span-8">
           <RecruiterProfileCard
             recruiterId={recruiterData?.id}
             recruiterProfile={recruiterProfile}
