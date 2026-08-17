@@ -10,6 +10,7 @@ import {
   RiArrowRightLine,
   RiUser3Line,
 } from "react-icons/ri";
+import Image from "next/image";
 
 const CompanyCard = ({ company }) => {
   const [imageError, setImageError] = useState(false);
@@ -34,12 +35,15 @@ const CompanyCard = ({ company }) => {
         {/* Top Header Row: Logo & Verified Badge */}
         <div className="flex items-start justify-between gap-4 mb-5">
           {/* Logo container */}
-          <div className="w-12 h-12 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden shrink-0 p-1.5">
+          <div className="relative w-12 h-12 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden shrink-0 p-1.5">
             {logo && !imageError ? (
-              <img
+              <Image
                 src={logo}
                 alt={`${name} logo`}
-                className="w-full h-full object-contain rounded-lg"
+                fill
+                sizes="60px"
+                priority
+                className="object-cover"
                 onError={() => setImageError(true)}
               />
             ) : (
@@ -50,9 +54,9 @@ const CompanyCard = ({ company }) => {
           </div>
 
           {/* Verified Badge */}
-          {(status === "approved" || status === "verified") && (
+          {status === "approved" && (
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wider uppercase bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 select-none shrink-0">
-              <RiCheckLine className="text-xs stroke-[3]" />
+              <RiCheckLine className="text-xs stroke-3" />
               <span>VERIFIED</span>
             </span>
           )}
@@ -97,7 +101,8 @@ const CompanyCard = ({ company }) => {
 
         <div className="flex items-center justify-between gap-2 pt-1">
           <span className="text-xs sm:text-sm font-semibold text-zinc-300">
-            {activeJobCount} {activeJobCount === 1 ? "Active Job" : "Active Jobs"}
+            {activeJobCount}{" "}
+            {activeJobCount === 1 ? "Active Job" : "Active Jobs"}
           </span>
 
           <Link
