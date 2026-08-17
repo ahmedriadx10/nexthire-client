@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { FiChevronLeft, FiChevronRight, FiMoreHorizontal } from "react-icons/fi";
 import { useQueryParams } from "@/hooks/useQueryParams";
 
 /**
@@ -65,7 +65,7 @@ const PaginationComponent = ({ currentPage = 1, totalPages = 0 }) => {
         onClick={() => setPage(currentPage - 1)}
         disabled={currentPage <= 1}
       >
-        <ChevronLeft size={15} />
+        <FiChevronLeft className="text-base" />
       </PageBtn>
 
       {/* Page numbers */}
@@ -75,7 +75,7 @@ const PaginationComponent = ({ currentPage = 1, totalPages = 0 }) => {
             key={`ellipsis-${i}`}
             className="flex items-center justify-center w-9 h-9 text-zinc-600 text-sm"
           >
-            <MoreHorizontal size={15} />
+            <FiMoreHorizontal className="text-base" />
           </span>
         ) : (
           <PageBtn
@@ -93,7 +93,7 @@ const PaginationComponent = ({ currentPage = 1, totalPages = 0 }) => {
         onClick={() => setPage(currentPage + 1)}
         disabled={currentPage >= totalPages}
       >
-        <ChevronRight size={15} />
+        <FiChevronRight className="text-base" />
       </PageBtn>
     </nav>
   );

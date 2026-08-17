@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { FiSearch } from "react-icons/fi";
 import { useSearchParams } from "next/navigation";
 import { useQueryParams } from "@/hooks/useQueryParams";
 
@@ -22,7 +22,7 @@ const SearchBar = () => {
     <div className="flex gap-3 w-full items-center bg-zinc-900 border border-zinc-800 rounded-2xl p-3">
       {/* Search input — native input styled with Tailwind */}
       <div className="flex items-center gap-2 flex-1 min-w-0">
-        <Search size={17} className="text-zinc-500 shrink-0 ml-1" />
+        <FiSearch className="text-zinc-500 shrink-0 ml-1 text-base" />
         <input
           type="text"
           value={query}

@@ -2,22 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Bookmark, MapPin, DollarSign, Briefcase } from "lucide-react"; // replace lucid react icons via react icons
+import { FiBookmark, FiMapPin, FiDollarSign, FiBriefcase } from "react-icons/fi";
 import toast from "react-hot-toast";
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
-
-//DRY Suggetion
-/**
- * for posting and deleting saved jobs here using raw fetch request instead of we can use our central function from @/lib/core/server-manage.js 
- * and also when we will post we need some data like userId,jobId,jobName etc 
- * and for deleting seeker saved jobs we need to pass jobsId and userId on the server using dynamic params /userId/jobId or query params 
- * now modify this handleBookmark
- */
-
-
-
-
+import { saveSeekerJob, deleteSavedSeekerJob } from "@/lib/actions/seeker-action/savedJobActions";
 
 /**
  * Formats a salary number into a compact string e.g. 180000 → "$180k"
@@ -74,23 +61,17 @@ const JobCard = ({ job, canSaveJob }) => {
     setBookmarkLoading(true);
 
     try {
-      const method = prevSaved ? "DELETE" : "POST";
-      const res = await fetch(`${baseUrl}/seeker/saved-jobs/${_id}`, {
-        method,
-        credentials: "include",
-        headers: { "content-type": "application/json" },
-      });
-
-      if (!res.ok) {
-        // Revert on failure
-        setSaved(prevSaved);
-        toast.error(prevSaved ? "Failed to unsave job." : "Failed to save job.");
+      if (prevSaved) {
+        await deleteSavedSeekerJob(_id);
+        toast.success("Job removed from saved.");
       } else {
-        toast.success(prevSaved ? "Job removed from saved." : "Job saved!");
+        await saveSeekerJob({ jobId: _id, jobTitle, companyName });
+        toast.success("Job saved!");
       }
-    } catch {
+    } catch (err) {
+      // Revert on failure
       setSaved(prevSaved);
-      toast.error("Something went wrong.");
+      toast.error(err?.message || (prevSaved ? "Failed to unsave job." : "Failed to save job."));
     } finally {
       setBookmarkLoading(false);
     }
@@ -122,7 +103,7 @@ const JobCard = ({ job, canSaveJob }) => {
                   <>
                     <span className="text-zinc-600">•</span>
                     <span className="flex items-center gap-1 text-sm text-zinc-400">
-                      <MapPin size={12} className="shrink-0" />
+                      <FiMapPin className="shrink-0 text-xs" />
                       {locationLabel}
                       {isRemote && (
                         <span className="ml-1 text-xs text-emerald-400 font-medium">
@@ -143,9 +124,8 @@ const JobCard = ({ job, canSaveJob }) => {
                 aria-label={saved ? "Unsave job" : "Save job"}
                 className="shrink-0 p-1.5 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-700 transition-all duration-150 disabled:opacity-50"
               >
-                <Bookmark
-                  size={18}
-                  className={`transition-all duration-200 ${
+                <FiBookmark
+                  className={`text-lg transition-all duration-200 ${
                     saved ? "fill-zinc-200 text-zinc-200" : ""
                   }`}
                 />
@@ -157,13 +137,13 @@ const JobCard = ({ job, canSaveJob }) => {
           <div className="flex items-center gap-2 mt-3 flex-wrap">
             {salaryLabel && (
               <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400 bg-emerald-950/60 border border-emerald-900/60 rounded-lg px-2.5 py-1">
-                <DollarSign size={11} />
+                <FiDollarSign className="text-xs" />
                 {salaryLabel}
               </span>
             )}
             {jobType && (
               <span className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 bg-zinc-800 border border-zinc-700 rounded-lg px-2.5 py-1">
-                <Briefcase size={11} />
+                <FiBriefcase className="text-xs" />
                 {formatJobType(jobType)}
               </span>
             )}

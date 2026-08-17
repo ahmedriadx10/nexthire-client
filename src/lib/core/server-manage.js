@@ -12,9 +12,6 @@ export const getAuthHeader = async () => {
     const token = await auth.api.getToken({
       headers: await headers(),
     });
-
-    //here i used ternery operator to check if the token exists and then return the authorization header with the token, otherwise return an empty object
-    // and used try catch block to handle any errors because as if i using betterAuth and jwt plugin if any user dosen't loged instead of throwing an error it will return null so i used try catch block to handle that error and return an empty object
     const authHeader = token?.token
       ? {
           authorization: `Bearer ${token?.token}`,
@@ -37,8 +34,12 @@ export const fetchData = async (path) => {
 
 // this for fetching data from the server with authorization headers
 export const protectedFetchData = async (path) => {
-  //TODO : in future when i will protech server api then i will add authorization header in the fetch request
-  const res = await fetch(`${baseUrl}${path}`);
+  const authHeader = await getAuthHeader();
+  const res = await fetch(`${baseUrl}${path}`, {
+    headers: {
+      ...authHeader,
+    },
+  });
 
   return handleStatusCode(res);
 };
@@ -46,10 +47,12 @@ export const protectedFetchData = async (path) => {
 // this function for mutating data on the server with authorization headers
 
 export const serverMutation = async (path, data, method = "POST") => {
+  const authHeader = await getAuthHeader();
   const res = await fetch(`${baseUrl}${path}`, {
     method: method,
     headers: {
       "content-type": "application/json",
+      ...authHeader,
     },
     body: JSON.stringify(data),
   });
@@ -60,11 +63,12 @@ export const serverMutation = async (path, data, method = "POST") => {
 // this function for deleting data on the server with authorization headers though i can use serverMutation function for deleting data but i created this function for better understanding of the code
 
 export const serverDataDelete = async (path, method = "DELETE") => {
+  const authHeader = await getAuthHeader();
   const res = await fetch(`${baseUrl}${path}`, {
     method: method,
-    // headers:{
-    //   'content-type':'application/json'
-    // }
+    headers: {
+      ...authHeader,
+    },
   });
 
   return handleStatusCode(res);
