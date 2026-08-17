@@ -5,15 +5,6 @@ import SortSelect from "@/components/browse-jobs/SortSelect";
 import JobList from "@/components/browse-jobs/JobList";
 import Pagination from "@/components/browse-jobs/Pagination";
 
-
-// BUG!
-/**
- * When user via mobile device the screen overflow cause our filter container and joblist are horizontally available on mobile device as a result it overflows 
- * 
- * FIX : in mobile device filter container and jobList container will be vertical after md: the can be horizontal that means flex-row
- */
-
-
 export const metadata = {
   title: "Browse Jobs | NextHire",
   description:
@@ -60,16 +51,16 @@ const BrowseJobsPage = async ({ searchParams }) => {
         {/* Search bar */}
         <SearchBar />
 
-        {/* Body: sidebar + listings */}
-        <div className="flex gap-5 items-start">
+        {/* Body: sidebar + listings (vertical on mobile, horizontal on md+) */}
+        <div className="flex flex-col md:flex-row gap-5 items-start">
 
           {/* Filter sidebar */}
-          <div className="w-52 shrink-0 sticky top-6">
+          <div className="w-full md:w-52 shrink-0 md:sticky top-6">
             <FilterSidebar />
           </div>
 
           {/* Job listings */}
-          <div className="flex-1 min-w-0 space-y-4">
+          <div className="w-full md:flex-1 min-w-0 space-y-4">
 
             {/* Listings header */}
             <div className="flex items-center justify-between flex-wrap gap-3">

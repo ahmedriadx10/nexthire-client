@@ -1,7 +1,7 @@
 "use client";
 
 import { useQueryParams } from "@/hooks/useQueryParams";
-import { ChevronDown } from "lucide-react"; // replace lucide react icons via react icons
+import { FiChevronDown } from "react-icons/fi";
 
 const SORT_OPTIONS = [
   { value: "newest", label: "Most Recent" },
@@ -32,10 +32,7 @@ const NativeSelect = ({ value, onChange, options, label }) => (
           </option>
         ))}
       </select>
-      <ChevronDown
-        size={13}
-        className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none"
-      />
+      <FiChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none text-xs" />
     </div>
   </div>
 );

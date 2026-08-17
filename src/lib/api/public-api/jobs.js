@@ -1,19 +1,11 @@
-import { getAuthHeader } from "@/lib/core/server-manage";
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
-
-//DRY Suggetion
-/**
- * instead using raw fetch for fetching jobs data you can use protectedFetch data from @/lib/core/server-manage.js
- * update the getBrowseJobs function to follow DRY principle
- */
-
+import { serverMutation } from "@/lib/core/server-manage";
 
 /**
  * Fetch paginated, filtered jobs for the browse-jobs page.
  *
  * Sends a POST to /jobs/search with the search body.
- * Includes the auth header so the backend can resolve:
+ * Uses serverMutation to automatically include authorization header
+ * so the backend can resolve:
  *  - job.isSaved (per-job boolean for authenticated seekers)
  *  - permission.canSaveJob (false for guests / recruiters / admins)
  *
@@ -28,8 +20,6 @@ export const getBrowseJobs = async ({
   page = 1,
 } = {}) => {
   try {
-    const authHeader = await getAuthHeader();
-
     // Normalise jobType — URL searchParams can give a single string or an array
     const jobTypeArray = Array.isArray(jobType)
       ? jobType
@@ -45,16 +35,7 @@ export const getBrowseJobs = async ({
       page: Number(page),
     };
 
-    const res = await fetch(`${baseUrl}/jobs/search`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        ...authHeader,
-      },
-      body: JSON.stringify(body),
-    });
-
-    const data = await res.json();
+    const data = await serverMutation("/jobs/search", body, "POST");
 
     return {
       jobs: data?.data?.jobs || [],
