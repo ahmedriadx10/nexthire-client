@@ -18,6 +18,6 @@ export const saveSeekerJob = async (payload) => {
  * @param {string} jobId - MongoDB _id of the job to unsave.
  * @returns {Promise<Object>} API response.
  */
-export const deleteSavedSeekerJob = async (jobId) => {
-  return serverDataDelete(`/seeker/saved-jobs/${jobId}`);
+export const deleteSavedSeekerJob = async ({userId,jobId}) => {
+  return serverDataDelete(`/seeker/saved-jobs/${userId}/${jobId}`);
 };

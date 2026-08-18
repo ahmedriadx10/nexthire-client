@@ -4,6 +4,7 @@ import FilterSidebar from "@/components/browse-jobs/FilterSidebar";
 import SortSelect from "@/components/browse-jobs/SortSelect";
 import JobList from "@/components/browse-jobs/JobList";
 import Pagination from "@/components/browse-jobs/Pagination";
+import { getLoggedInUserSession } from "@/lib/core/Session";
 
 export const metadata = {
   title: "Browse Jobs | NextHire",
@@ -27,6 +28,9 @@ export const metadata = {
 const BrowseJobsPage = async ({ searchParams }) => {
   // searchParams is a Promise in Next.js 16 — must be awaited
   const resolvedParams = await searchParams;
+const seekerData=await getLoggedInUserSession()
+
+
 
   const {
     search = "",
@@ -75,7 +79,7 @@ const BrowseJobsPage = async ({ searchParams }) => {
             </div>
 
             {/* Job cards */}
-            <JobList jobs={jobs} permission={permission} />
+            <JobList jobs={jobs} permission={permission} user={seekerData} />
 
             {/* Pagination */}
             <Pagination
