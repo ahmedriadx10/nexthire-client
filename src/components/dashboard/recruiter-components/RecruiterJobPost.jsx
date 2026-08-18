@@ -295,6 +295,7 @@ const RecruiterJobPost = ({ company,user }) => {
         salaryMax: parseFloat(formData.salaryMax),
         companyId: company?._id || company?.id,
         companyName: company?.name,
+        companyImage:company?.logo,
         recruiterId:user?.id,
         recruiterEmail:user?.email
  
