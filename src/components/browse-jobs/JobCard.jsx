@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FiBookmark, FiMapPin, FiDollarSign, FiBriefcase } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { saveSeekerJob, deleteSavedSeekerJob } from "@/lib/actions/seeker-action/savedJobActions";
+import Image from "next/image";
 
 /**
  * Formats a salary number into a compact string e.g. 180000 → "$180k"
@@ -24,7 +25,7 @@ const formatJobType = (type) => {
   return type.charAt(0).toUpperCase() + type.slice(1);
 };
 
-const JobCard = ({ job, canSaveJob }) => {
+const JobCard = ({ job={}, canSaveJob }) => {
   const [saved, setSaved] = useState(job?.isSaved ?? false);
   const [bookmarkLoading, setBookmarkLoading] = useState(false);
 
@@ -39,6 +40,7 @@ const JobCard = ({ job, canSaveJob }) => {
     salaryMin,
     salaryMax,
     currency,
+    companyImage
   } = job;
 
   const salaryMin_f = formatSalary(salaryMin, currency);
@@ -84,11 +86,29 @@ const JobCard = ({ job, canSaveJob }) => {
     >
       <div className="flex items-start gap-4">
         {/* Company logo placeholder */}
-        <div className="shrink-0 w-11 h-11 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center overflow-hidden">
+        {/* <div className="shrink-0 w-11 h-11 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center overflow-hidden">
           <span className="text-xs font-bold text-zinc-500 uppercase select-none">
             {companyName?.charAt(0) || "?"}
           </span>
-        </div>
+        </div> */}
+
+                  <div className="relative w-12 h-12 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden shrink-0 p-1.5">
+                    {companyImage ? (
+                      <Image
+                        src={companyImage}
+                        alt={`${companyName} logo`}
+                        fill
+                        sizes="60px"
+                        priority
+                        className="object-cover"
+                        // onError={() => setImageError(true)}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-zinc-900 text-primary font-extrabold text-lg uppercase rounded-lg">
+                        {companyName?.charAt(0) || '?'}
+                      </div>
+                    )}
+                  </div>
 
         {/* Main content */}
         <div className="flex-1 min-w-0">

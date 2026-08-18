@@ -28,7 +28,7 @@ export const useQueryParams = () => {
       const params = new URLSearchParams(searchParams.toString());
 
       Object.entries(updates).forEach(([key, value]) => {
-        if (value === null || value === undefined || value === "") {
+        if (value === null || value === undefined || value === "" || value==='all-time' || value ==='newest') {
           params.delete(key);
         } else if (Array.isArray(value)) {
           params.delete(key);

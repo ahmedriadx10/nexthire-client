@@ -12,7 +12,7 @@ import {
 } from "react-icons/ri";
 import Image from "next/image";
 
-const CompanyCard = ({ company }) => {
+const CompanyCard = ({ company={} }) => {
   const [imageError, setImageError] = useState(false);
 
   if (!company) return null;
