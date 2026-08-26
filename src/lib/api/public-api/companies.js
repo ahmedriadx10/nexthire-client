@@ -30,3 +30,21 @@ export const getCompanies = async (search = "", page = 1) => {
     };
   }
 };
+
+/**
+ * Fetch single company details by companyId.
+ * 
+ * @param {string} companyId - MongoDB ObjectId or unique company identifier
+ * @returns {Promise<Object|null>} Company data object or null if not found
+ */
+export const getCompanyById = async (companyId) => {
+  try {
+    if (!companyId) return null;
+    const data = await fetchData(`/companies/${companyId}`);
+    return data?.companyData || null;
+  } catch (error) {
+    console.error(`Error fetching company for ID ${companyId}:`, error);
+    return null;
+  }
+};
+

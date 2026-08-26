@@ -199,6 +199,7 @@ const RecruiterAccountCard = ({ recruiterData }) => {
                   alt={name}
                   fill
                   className="object-cover"
+                  referrerPolicy="no-referrer"
                   sizes="64px"
                   priority
                 />

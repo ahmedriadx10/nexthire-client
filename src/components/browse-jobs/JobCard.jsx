@@ -25,7 +25,7 @@ const formatJobType = (type) => {
   return type.charAt(0).toUpperCase() + type.slice(1);
 };
 
-const JobCard = ({ job={}, canSaveJob }) => {
+const JobCard = ({ job={}, canSaveJob,user }) => {
   const [saved, setSaved] = useState(job?.isSaved ?? false);
   const [bookmarkLoading, setBookmarkLoading] = useState(false);
 
@@ -40,7 +40,8 @@ const JobCard = ({ job={}, canSaveJob }) => {
     salaryMin,
     salaryMax,
     currency,
-    companyImage
+    companyImage,
+    companyId
   } = job;
 
   const salaryMin_f = formatSalary(salaryMin, currency);
@@ -62,12 +63,13 @@ const JobCard = ({ job={}, canSaveJob }) => {
     setSaved(!prevSaved);
     setBookmarkLoading(true);
 
+    // TODO: In future when we will apply JWT and validate user perfectly on the server then i will check is there any ui state issue to save job or unsave.
     try {
       if (prevSaved) {
-        await deleteSavedSeekerJob(_id);
+        await deleteSavedSeekerJob({userId:user?.id,jobId:_id});
         toast.success("Job removed from saved.");
       } else {
-        await saveSeekerJob({ jobId: _id, jobTitle, companyName });
+        await saveSeekerJob({ jobId: _id,userId:user?.id , jobTitle, companyName,companyId });
         toast.success("Job saved!");
       }
     } catch (err) {

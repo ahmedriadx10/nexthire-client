@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${interFont.className}  h-full antialiased`}>
       <body className="min-h-full  flex flex-col antialiased ">
         {children}
-        <Toaster />
+        <Toaster position="bottom-center" />
       </body>
     </html>
   );

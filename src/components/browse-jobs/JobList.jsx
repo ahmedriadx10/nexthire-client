@@ -21,7 +21,7 @@ const EmptyState = () => (
  * Receives pre-fetched jobs array and permission object from the page.
  * Maps over jobs and renders a JobCard for each.
  */
-const JobList = ({ jobs = [], permission = { canSaveJob: false } }) => {
+const JobList = ({ jobs = [], permission = { canSaveJob: false } ,user }) => {
   if (!jobs.length) return <EmptyState />;
 
   return (
@@ -31,6 +31,8 @@ const JobList = ({ jobs = [], permission = { canSaveJob: false } }) => {
           key={job._id}
           job={job}
           canSaveJob={permission.canSaveJob}
+          user={user}
+          
         />
       ))}
     </div>

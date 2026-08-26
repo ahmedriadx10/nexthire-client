@@ -12,6 +12,7 @@ import {
   FiUser,
 } from "react-icons/fi";
 import RecruiterProfileEditForm from "./RecruiterProfileEditForm";
+import Image from "next/image";
 
 /**
  * RecruiterProfileCard — Client Component
@@ -58,9 +59,12 @@ const RecruiterProfileCard = ({ recruiterId, recruiterProfile }) => {
       {/* ── Cover Banner ── */}
       <div className="relative w-full h-36 shrink-0 overflow-hidden">
         {profile?.coverImage ? (
-          <img
+          <Image
             src={profile.coverImage}
             alt="Cover banner"
+          fill
+          priority
+     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 60vw"
             className="w-full h-full object-cover"
           />
         ) : (
@@ -87,14 +91,34 @@ const RecruiterProfileCard = ({ recruiterId, recruiterProfile }) => {
                 >
                   <circle cx="2" cy="2" r="1" fill="#3f3f46" opacity="0.5" />
                 </pattern>
-                <linearGradient id="cover-glow" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="var(--color-primary, #00a6fb)" stopOpacity="0.05" />
-                  <stop offset="50%" stopColor="var(--color-primary, #00a6fb)" stopOpacity="0.2" />
+                <linearGradient
+                  id="cover-glow"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop
+                    offset="0%"
+                    stopColor="var(--color-primary, #00a6fb)"
+                    stopOpacity="0.05"
+                  />
+                  <stop
+                    offset="50%"
+                    stopColor="var(--color-primary, #00a6fb)"
+                    stopOpacity="0.2"
+                  />
                   <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.05" />
                 </linearGradient>
               </defs>
               <rect width="600" height="144" fill="url(#cover-dots)" />
-              <ellipse cx="300" cy="72" rx="180" ry="50" fill="url(#cover-glow)" />
+              <ellipse
+                cx="300"
+                cy="72"
+                rx="180"
+                ry="50"
+                fill="url(#cover-glow)"
+              />
             </svg>
 
             <p className="absolute inset-0 flex items-center justify-center text-[11px] text-zinc-600 font-light tracking-widest uppercase pointer-events-none select-none">

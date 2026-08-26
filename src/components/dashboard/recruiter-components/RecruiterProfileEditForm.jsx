@@ -33,7 +33,11 @@ import { updateRecruiterProfile } from "@/lib/actions/recruiter-action/recruiter
  * Inline edit form for recruiterProfile fields.
  * Calls PATCH /recruiter/profile/:id via the updateRecruiterProfile server action.
  */
-const RecruiterProfileEditForm = ({ recruiterId, recruiterProfile, onCancel }) => {
+const RecruiterProfileEditForm = ({
+  recruiterId,
+  recruiterProfile,
+  onCancel,
+}) => {
   const router = useRouter();
   const fileInputRef = useRef(null);
 
@@ -75,8 +79,14 @@ const RecruiterProfileEditForm = ({ recruiterId, recruiterProfile, onCancel }) =
   };
 
   const handleDragOver = (e) => e.preventDefault();
-  const handleDragEnter = (e) => { e.preventDefault(); setIsDragActive(true); };
-  const handleDragLeave = (e) => { e.preventDefault(); setIsDragActive(false); };
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    setIsDragActive(true);
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragActive(false);
+  };
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragActive(false);
@@ -124,7 +134,8 @@ const RecruiterProfileEditForm = ({ recruiterId, recruiterProfile, onCancel }) =
 
   const field = (key) => ({
     value: formData[key],
-    onChange: (e) => setFormData((prev) => ({ ...prev, [key]: e.target.value })),
+    onChange: (e) =>
+      setFormData((prev) => ({ ...prev, [key]: e.target.value })),
   });
 
   // ─── Render ───────────────────────────────────────────────────────────────
@@ -147,7 +158,9 @@ const RecruiterProfileEditForm = ({ recruiterId, recruiterProfile, onCancel }) =
             />
             <button
               type="button"
-              onClick={() => setFormData((prev) => ({ ...prev, coverImage: "" }))}
+              onClick={() =>
+                setFormData((prev) => ({ ...prev, coverImage: "" }))
+              }
               className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
               aria-label="Remove cover image"
             >
@@ -167,9 +180,10 @@ const RecruiterProfileEditForm = ({ recruiterId, recruiterProfile, onCancel }) =
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           className={`relative flex flex-col items-center justify-center gap-2 h-20 rounded-xl border-2 border-dashed cursor-pointer transition-all duration-200 select-none
-            ${isDragActive
-              ? "border-primary/80 bg-primary/5 scale-[1.01]"
-              : "border-zinc-700/60 bg-zinc-800/20 hover:border-zinc-600 hover:bg-zinc-800/40"
+            ${
+              isDragActive
+                ? "border-primary/80 bg-primary/5 scale-[1.01]"
+                : "border-zinc-700/60 bg-zinc-800/20 hover:border-zinc-600 hover:bg-zinc-800/40"
             }
             ${isUploadingCover ? "pointer-events-none opacity-60" : ""}
           `}
@@ -188,8 +202,8 @@ const RecruiterProfileEditForm = ({ recruiterId, recruiterProfile, onCancel }) =
               <FiUploadCloud className="text-zinc-500 text-xl" />
               <p className="text-xs text-zinc-500 font-light">
                 Drag &amp; drop or{" "}
-                <span className="text-primary font-semibold">browse</span>
-                {" "}— max 5 MB
+                <span className="text-primary font-semibold">browse</span> — max
+                5 MB
               </p>
             </>
           )}
@@ -219,7 +233,9 @@ const RecruiterProfileEditForm = ({ recruiterId, recruiterProfile, onCancel }) =
           rows={4}
           placeholder="Tell candidates a bit about yourself and your hiring philosophy…"
           value={formData.bio}
-          onChange={(e) => setFormData((prev) => ({ ...prev, bio: e.target.value }))}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, bio: e.target.value }))
+          }
           className="w-full px-3 py-2.5 rounded-lg bg-[#141416]/90 border border-zinc-800 text-white placeholder-zinc-600 focus:outline-none focus:border-primary/80 focus:ring-1 focus:ring-primary/80 transition-all text-sm font-light resize-none"
         />
       </div>
@@ -280,7 +296,9 @@ const RecruiterProfileEditForm = ({ recruiterId, recruiterProfile, onCancel }) =
             type="url"
             placeholder="linkedin.com/in/yourprofile"
             value={formData.linkedin}
-            onChange={(e) => setFormData((prev) => ({ ...prev, linkedin: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, linkedin: e.target.value }))
+            }
             className="w-full h-full px-3 bg-transparent border-0 text-white placeholder-zinc-600 focus:outline-none text-sm font-light"
           />
         </div>
@@ -294,7 +312,9 @@ const RecruiterProfileEditForm = ({ recruiterId, recruiterProfile, onCancel }) =
             type="url"
             placeholder="facebook.com/yourprofile"
             value={formData.facebook}
-            onChange={(e) => setFormData((prev) => ({ ...prev, facebook: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, facebook: e.target.value }))
+            }
             className="w-full h-full px-3 bg-transparent border-0 text-white placeholder-zinc-600 focus:outline-none text-sm font-light"
           />
         </div>
@@ -308,7 +328,9 @@ const RecruiterProfileEditForm = ({ recruiterId, recruiterProfile, onCancel }) =
             type="url"
             placeholder="x.com/yourhandle"
             value={formData.twitter}
-            onChange={(e) => setFormData((prev) => ({ ...prev, twitter: e.target.value }))}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, twitter: e.target.value }))
+            }
             className="w-full h-full px-3 bg-transparent border-0 text-white placeholder-zinc-600 focus:outline-none text-sm font-light"
           />
         </div>
