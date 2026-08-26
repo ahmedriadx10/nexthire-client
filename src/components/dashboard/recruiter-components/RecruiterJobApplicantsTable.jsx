@@ -33,7 +33,7 @@ const formatRelativeDate = (dateStr) => {
 
 // Generates fallback avatar initial
 const getInitials = (name = "") => {
-  return name.trim().charAt(0).toUpperCase() || "?";
+  return name?.trim()?.charAt(0)?.toUpperCase() || "?";
 };
 
 // ─── Empty State ──────────────────────────────────────────────────────────────
@@ -228,7 +228,7 @@ const RecruiterJobApplicantsTable = ({
                     }`}
                   >
                     {/* Applicant Info (Avatar, Name, Email, Phone) */}
-                    <td className="px-5 py-4 min-w-55">
+                    <td className="px-5 py-4 min-w-55 ">
                       <div className="flex items-center gap-3">
                         {app.avatar ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
