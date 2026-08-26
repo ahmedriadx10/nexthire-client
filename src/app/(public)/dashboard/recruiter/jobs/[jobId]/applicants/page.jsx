@@ -23,7 +23,7 @@ const RecruiterJobPostApplicatsViewPage = async ({ params, searchParams }) => {
     getRecruiterJobApplicants(jobId, { status, page: currentPage }).catch(() => null),
   ]);
 
-  const job = jobRes?.job || jobRes?.data || null;
+  const job = jobRes || jobRes?.data || null;
 
   const applications = applicantsRes?.data?.applications ?? applicantsRes?.applications ?? [];
   const pagination = applicantsRes?.data?.pagination ?? applicantsRes?.pagination ?? {

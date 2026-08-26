@@ -30,6 +30,7 @@ const ApplicantMessageModal = ({ message, name = "Applicant", jobName, email }) 
   return (
     <>
       <button
+  
         type="button"
         onClick={() => setIsOpen(true)}
         title="View cover message"
@@ -43,9 +44,9 @@ const ApplicantMessageModal = ({ message, name = "Applicant", jobName, email }) 
         <Modal.Backdrop variant="blur">
           <Modal.Container>
             <Modal.Dialog className="sm:max-w-lg bg-[#0e0e10] border border-zinc-800/80 text-zinc-100 rounded-2xl shadow-2xl p-0 overflow-hidden relative max-h-[85vh] flex flex-col">
-              <Modal.CloseTrigger className="absolute right-4 top-4 text-zinc-400 hover:text-white cursor-pointer transition-colors p-1.5 rounded-lg hover:bg-zinc-900">
+              {/* <Modal.CloseTrigger className="absolute right-4 top-4 text-zinc-400 hover:text-white cursor-pointer transition-colors p-1.5 rounded-lg hover:bg-zinc-900">
                 <FiX className="size-4" />
-              </Modal.CloseTrigger>
+              </Modal.CloseTrigger> */}
 
               {/* Header */}
               <Modal.Header className="px-6 pt-6 pb-4 border-b border-zinc-900 flex items-start gap-4">
