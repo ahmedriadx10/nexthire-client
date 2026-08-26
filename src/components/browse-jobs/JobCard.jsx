@@ -63,6 +63,7 @@ const JobCard = ({ job={}, canSaveJob,user }) => {
     setSaved(!prevSaved);
     setBookmarkLoading(true);
 
+    // TODO: In future when we will apply JWT and validate user perfectly on the server then i will check is there any ui state issue to save job or unsave.
     try {
       if (prevSaved) {
         await deleteSavedSeekerJob({userId:user?.id,jobId:_id});

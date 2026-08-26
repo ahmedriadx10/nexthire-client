@@ -19,7 +19,7 @@ export const getAuthHeader = async () => {
       : {};
     return authHeader;
   } catch (error) {
-    console.log("Guest user, no token found");
+    // console.log("Guest user, no token found");
     return {};
   }
 };

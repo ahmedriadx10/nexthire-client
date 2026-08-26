@@ -1,4 +1,4 @@
-import { serverMutation } from "@/lib/core/server-manage";
+import { protectedFetchData, serverMutation } from "@/lib/core/server-manage";
 
 /**
  * Fetch paginated, filtered jobs for the browse-jobs page.
@@ -56,3 +56,21 @@ export const getBrowseJobs = async ({
     };
   }
 };
+
+/**
+ * Fetch job details by jobId.
+ * Uses protectedFetchData so backend includes isApplied and permission (canApply).
+ *
+ * @param {string} jobId
+ * @returns {Promise<Object|null>}
+ */
+export const getJobDetails = async (jobId) => {
+  try {
+    const data = await protectedFetchData(`/jobs/${jobId}`);
+    return data?.data || null;
+  } catch (error) {
+    console.error(`Error fetching job details for ID ${jobId}:`, error);
+    return null;
+  }
+};
+

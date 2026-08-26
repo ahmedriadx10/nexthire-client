@@ -268,7 +268,10 @@ const RecruiterJobPost = ({ company,user }) => {
       toast.error("Minimum salary cannot exceed maximum salary.");
       return false;
     }
+
+    // have to modify here if i add Date ISO string
     const deadline = new Date(formData.applicationDeadline);
+
     if (deadline <= new Date()) {
       toast.error("Application deadline must be a future date.");
       return false;
@@ -301,12 +304,12 @@ const RecruiterJobPost = ({ company,user }) => {
  
       };
 
-console.log("Submitting job post payload:", payload);
+// console.log("Submitting job post payload:", payload);
 
      
       const result = await createRecruiterJob(payload);
 
-console.log("Job post API response:", result);
+// console.log("Job post API response:", result);
 
 
       if (result?.acknowledged || result?.insertedId) {
@@ -648,6 +651,7 @@ console.log("Job post API response:", result);
                   setFormData((prev) => ({
                     ...prev,
                     applicationDeadline: e.target.value,
+       
                   }))
                 }
                 disabled={loading}

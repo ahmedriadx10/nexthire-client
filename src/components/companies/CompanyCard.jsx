@@ -106,10 +106,10 @@ const CompanyCard = ({ company={} }) => {
           </span>
 
           <Link
-            href={`/companies/${_id}`}
+            href={`/companies/company-profile/${_id}`}
             className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-zinc-300 group-hover:text-white transition-colors duration-300"
           >
-            <span>View Openings</span>
+            <span>View Profile</span>
             <RiArrowRightLine className="text-sm group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
