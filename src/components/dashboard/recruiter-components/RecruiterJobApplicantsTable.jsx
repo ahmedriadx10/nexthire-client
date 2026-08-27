@@ -174,7 +174,7 @@ const RecruiterJobApplicantsTable = ({
   return (
     <div className="space-y-6">
       {/* ── Filter Tabs ────────────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
         <ApplicantFilterTabs currentStatus={currentStatus} />
 
         <p className="text-xs text-zinc-500 font-medium shrink-0">

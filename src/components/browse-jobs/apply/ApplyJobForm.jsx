@@ -15,7 +15,7 @@ import {
   FiCheck,
 } from "react-icons/fi";
 
-export default function ApplyJobForm({ jobId,jobName, seeker, onSuccess ,companyId}) {
+export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSuccess ,companyId}) {
   const [formData, setFormData] = useState({
     name: seeker?.name || "",
     email: seeker?.email || "",
@@ -129,6 +129,7 @@ export default function ApplyJobForm({ jobId,jobName, seeker, onSuccess ,company
         message: formData.message.trim(),
         // coverLetter: formData.message.trim(),
         companyId,
+        recruiterId,
         jobName
       };
 
