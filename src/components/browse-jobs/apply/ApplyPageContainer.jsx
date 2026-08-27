@@ -7,7 +7,11 @@ import ApplicationSuccessState from "./ApplicationSuccessState";
 import ApplyPermissionBanner from "./ApplyPermissionBanner";
 
 export default function ApplyPageContainer({ job, seekerSession }) {
-  const { _id, jobTitle, company, isApplied, permission } = job;
+  const { _id, jobTitle, company, isApplied, permission ,
+recruiterId} = job;
+
+
+
   const companyName = company?.name;
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -47,6 +51,8 @@ export default function ApplyPageContainer({ job, seekerSession }) {
       <ApplyJobForm
         jobId={_id}
         jobName={jobTitle}
+        recruiterId={recruiterId}
+
         companyId={company?.companyId}
         seeker={seekerSession}
         onSuccess={() => setHasSubmitted(true)}

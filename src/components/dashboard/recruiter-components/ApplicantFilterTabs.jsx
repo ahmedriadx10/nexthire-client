@@ -42,7 +42,7 @@ const ApplicantFilterTabs = ({ currentStatus = "all" }) => {
   };
 
   return (
-    <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none select-none">
+    <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-primary select-none">
       {STATUS_OPTIONS.map((item) => {
         const isActive = activeStatus === item.value;
         return (
