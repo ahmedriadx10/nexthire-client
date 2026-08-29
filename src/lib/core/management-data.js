@@ -23,11 +23,11 @@ Object.freeze(roleBasedDashboardLinks);
 export const roleBasedDashboardNavlinks = {
   seeker: [
     { name: "Dashboard Home", href: "/dashboard/seeker", icon: FiHome },
-    {
-      name: "Browse & Apply",
-      href: "/dashboard/seeker/jobs",
-      icon: FiBriefcase,
-    },
+    // {
+    //   name: "Browse & Apply",
+    //   href: "/dashboard/seeker/jobs",
+    //   icon: FiBriefcase,
+    // },
     { name: "Saved Jobs", href: "/dashboard/seeker/saved", icon: FiBookmark },
     {
       name: "My Applications",
