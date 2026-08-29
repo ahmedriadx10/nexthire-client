@@ -41,7 +41,8 @@ const JobCard = ({ job={}, canSaveJob,user }) => {
     salaryMax,
     currency,
     companyImage,
-    companyId
+    companyId,
+    applicationDeadline
   } = job;
 
   const salaryMin_f = formatSalary(salaryMin, currency);
@@ -69,7 +70,7 @@ const JobCard = ({ job={}, canSaveJob,user }) => {
         await deleteSavedSeekerJob({userId:user?.id,jobId:_id});
         toast.success("Job removed from saved.");
       } else {
-        await saveSeekerJob({ jobId: _id,userId:user?.id , jobTitle, companyName,companyId });
+        await saveSeekerJob({ jobId: _id,userId:user?.id , jobTitle, companyName,companyId,applicationDeadline });
         toast.success("Job saved!");
       }
     } catch (err) {

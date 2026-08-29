@@ -8,7 +8,7 @@ import ApplyPermissionBanner from "./ApplyPermissionBanner";
 
 export default function ApplyPageContainer({ job, seekerSession }) {
   const { _id, jobTitle, company, isApplied, permission ,
-recruiterId} = job;
+recruiterId,applicationDeadline} = job;
 
 
 
@@ -52,7 +52,7 @@ recruiterId} = job;
         jobId={_id}
         jobName={jobTitle}
         recruiterId={recruiterId}
-
+applicationDeadline={applicationDeadline}
         companyId={company?.companyId}
         seeker={seekerSession}
         onSuccess={() => setHasSubmitted(true)}

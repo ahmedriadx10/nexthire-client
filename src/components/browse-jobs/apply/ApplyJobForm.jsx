@@ -15,7 +15,15 @@ import {
   FiCheck,
 } from "react-icons/fi";
 
-export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSuccess ,companyId}) {
+export default function ApplyJobForm({
+  jobId,
+  jobName,
+  recruiterId,
+  seeker,
+  onSuccess,
+  companyId,
+  applicationDeadline,
+}) {
   const [formData, setFormData] = useState({
     name: seeker?.name || "",
     email: seeker?.email || "",
@@ -23,8 +31,6 @@ export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSucc
     resumeLink: "",
     message: "",
   });
-
- 
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,25 +65,29 @@ export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSucc
     // Resume Link validation
     const resumeUrl = formData.resumeLink.trim();
     if (!resumeUrl) {
-      newErrors.resumeLink = "Resume link (Google Drive, Dropbox, etc.) is required.";
+      newErrors.resumeLink =
+        "Resume link (Google Drive, Dropbox, etc.) is required.";
     } else {
       try {
         const parsedUrl = new URL(
           resumeUrl.startsWith("http://") || resumeUrl.startsWith("https://")
             ? resumeUrl
-            : `https://${resumeUrl}`
+            : `https://${resumeUrl}`,
         );
         if (!parsedUrl.hostname || !parsedUrl.hostname.includes(".")) {
-          newErrors.resumeLink = "Please provide a valid web URL for your resume.";
+          newErrors.resumeLink =
+            "Please provide a valid web URL for your resume.";
         }
       } catch (err) {
-        newErrors.resumeLink = "Please enter a valid URL (e.g., https://drive.google.com/...)";
+        newErrors.resumeLink =
+          "Please enter a valid URL (e.g., https://drive.google.com/...)";
       }
     }
 
     // Cover letter / Message validation (optional, but if filled, must be meaningful)
     if (formData.message.trim() && formData.message.trim().length < 10) {
-      newErrors.message = "Cover letter message should be at least 10 characters if provided.";
+      newErrors.message =
+        "Cover letter message should be at least 10 characters if provided.";
     }
 
     setErrors(newErrors);
@@ -119,7 +129,7 @@ export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSucc
       }
 
       const payload = {
-        userId:seeker?.id,
+        userId: seeker?.id,
         jobId,
         name: formData.name.trim(),
         email: formData.email.trim(),
@@ -130,43 +140,61 @@ export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSucc
         // coverLetter: formData.message.trim(),
         companyId,
         recruiterId,
-        jobName
+        jobName,
+        applicationDeadline,
       };
 
       const res = await applyForJob(jobId, payload);
 
-      if (res?.success || res?.status === 200 || res?.status === 201 || res?.data) {
+      if (
+        res?.success ||
+        res?.status === 200 ||
+        res?.status === 201 ||
+        res?.data
+      ) {
         toast.success("Application submitted successfully!");
         if (onSuccess) {
           onSuccess(res?.data || payload);
         }
       } else {
-        const errorMsg = res?.message || "Failed to submit application. Please try again.";
+        const errorMsg =
+          res?.message || "Failed to submit application. Please try again.";
         toast.error(errorMsg);
       }
     } catch (error) {
       console.error("Error submitting job application:", error);
-      toast.error(error?.message || "Something went wrong while submitting your application.");
+      toast.error(
+        error?.message ||
+          "Something went wrong while submitting your application.",
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6"
+    >
       <div className="border-b border-zinc-800 pb-4">
-        <h3 className="text-xl font-bold text-white tracking-tight">Application Form</h3>
+        <h3 className="text-xl font-bold text-white tracking-tight">
+          Application Form
+        </h3>
         <p className="text-sm text-zinc-400 mt-1">
-          Please fill in your details accurately. The recruiter will use this information to evaluate your application.
+          Please fill in your details accurately. The recruiter will use this
+          information to evaluate your application.
         </p>
-
-       
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Full Name */}
         <div className="space-y-2">
-          <label htmlFor="name" className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider">
+          <label
+            htmlFor="name"
+            className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider"
+          >
             Full Name <span className="text-emerald-400">*</span>
           </label>
           <div className="relative">
@@ -197,7 +225,10 @@ export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSucc
 
         {/* Email Address */}
         <div className="space-y-2">
-          <label htmlFor="email" className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider">
+          <label
+            htmlFor="email"
+            className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider"
+          >
             Email Address <span className="text-emerald-400">*</span>
           </label>
           <div className="relative">
@@ -228,7 +259,10 @@ export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSucc
 
         {/* Phone Number */}
         <div className="space-y-2">
-          <label htmlFor="phone" className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider">
+          <label
+            htmlFor="phone"
+            className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider"
+          >
             Phone Number <span className="text-emerald-400">*</span>
           </label>
           <div className="relative">
@@ -254,15 +288,17 @@ export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSucc
               <FiAlertCircle className="shrink-0" />
               <span>{errors.phone}</span>
             </p>
-
-
           )}
         </div>
 
         {/* Resume Link */}
         <div className="space-y-2">
-          <label htmlFor="resumeLink" className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider">
-            Resume Drive / Portfolio Link <span className="text-emerald-400">*</span>
+          <label
+            htmlFor="resumeLink"
+            className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider"
+          >
+            Resume Drive / Portfolio Link{" "}
+            <span className="text-emerald-400">*</span>
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
@@ -289,7 +325,8 @@ export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSucc
             </p>
           ) : (
             <p className="text-[11px] text-zinc-500">
-              Provide a viewable link to your resume (Google Drive, Dropbox, OneDrive, Notion, or personal site).
+              Provide a viewable link to your resume (Google Drive, Dropbox,
+              OneDrive, Notion, or personal site).
             </p>
           )}
         </div>
@@ -297,8 +334,14 @@ export default function ApplyJobForm({ jobId,jobName, recruiterId,seeker, onSucc
 
       {/* Cover Letter / Additional Message */}
       <div className="space-y-2">
-        <label htmlFor="message" className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider">
-          Cover Letter / Message <span className="text-zinc-500 font-normal lowercase">(optional)</span>
+        <label
+          htmlFor="message"
+          className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider"
+        >
+          Cover Letter / Message{" "}
+          <span className="text-zinc-500 font-normal lowercase">
+            (optional)
+          </span>
         </label>
         <div className="relative">
           <div className="absolute top-3.5 left-3.5 flex items-start pointer-events-none text-zinc-500">
