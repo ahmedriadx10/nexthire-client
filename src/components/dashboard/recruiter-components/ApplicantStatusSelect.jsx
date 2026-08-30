@@ -46,6 +46,15 @@ const ApplicantStatusSelect = ({ applicationId, initialStatus = "applied", appli
   const [isUpdating, setIsUpdating] = useState(false);
 
   const currentConfig = STATUS_CONFIG[status] || STATUS_CONFIG.applied;
+const canChangeStatus=status !=='withdrawn'
+
+if(!canChangeStatus){
+  return (      <span
+        className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border bg-zinc-800/80 text-zinc-400 border-zinc-700/60`}
+      >
+        {status}
+      </span>)
+}
 
   const handleStatusChange = async (e) => {
     const nextStatus = e.target.value;
@@ -76,6 +85,8 @@ const ApplicantStatusSelect = ({ applicationId, initialStatus = "applied", appli
 
   return (
     <div className="relative inline-flex items-center">
+
+
       <select
         value={status}
         onChange={handleStatusChange}
