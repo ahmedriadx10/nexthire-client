@@ -10,6 +10,7 @@ const STATUS_OPTIONS = [
   { label: "Interview", value: "interview" },
   { label: "Hired", value: "hired" },
   { label: "Rejected", value: "rejected" },
+  { label: "Withdrawn", value: "withdrawn" },
 ];
 
 /**
