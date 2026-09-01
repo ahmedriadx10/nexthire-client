@@ -56,6 +56,8 @@ const RecruiterDeleteAccountDialog = ({
     if (success) {
       toast.success("Account deleted successfully.", { id: toastId });
       onClose();
+      // used for refresh js bundle if any problem comes in future we will try different approach
+      router.refresh();
       setTimeout(() => router.push(redirectTo), 800);
     } else {
       toast.error(error || "Failed to delete account. Please try again.", {
