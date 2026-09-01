@@ -92,6 +92,7 @@ export const resendVerificationEmail = async (email, callbackURL = "/") => {
       email,
       callbackURL,
     });
+
     if (error)
       return {
         success: false,
@@ -128,6 +129,7 @@ export const deleteUserAccount = async ({ password, callbackURL } = {}) => {
     if (callbackURL) payload.callbackURL = callbackURL;
 
     const { error } = await authClient.deleteUser(payload);
+
     if (error)
       return {
         success: false,
