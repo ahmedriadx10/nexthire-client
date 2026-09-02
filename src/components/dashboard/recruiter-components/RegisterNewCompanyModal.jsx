@@ -163,7 +163,6 @@ const RegisterNewCompanyModal = ({ user }) => {
         description: formData.description,
         recruiterId: user?.id,
         recruiterEmail: user?.email,
-        status: "pending",
       });
 
       toast.success("Company registration submitted. Awaiting Admin approval.");

@@ -11,6 +11,7 @@ import {
   FiShield,
   FiDollarSign,
 } from "react-icons/fi";
+import { PiBuildingsBold } from "react-icons/pi";
 
 export const roleBasedDashboardLinks = {
   seeker: "/dashboard/seeker",
@@ -72,9 +73,10 @@ export const roleBasedDashboardNavlinks = {
   admin: [
     { name: "Dashboard Home", href: "/dashboard/admin", icon: FiGrid },
     { name: "Manage Users", href: "/dashboard/admin/users", icon: FiUsers },
+    { name: "Manage Companies", href: "/dashboard/admin/companies", icon: PiBuildingsBold  },
     {
       name: "Manage Jobs",
-      href: "/dashboard/admin/manage-jobs",
+      href: "/dashboard/admin/jobs",
       icon: FiBriefcase,
     },
     {
