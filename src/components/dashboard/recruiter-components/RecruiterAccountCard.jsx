@@ -22,8 +22,8 @@ import {
   updateUserNameAndImage,
   resendVerificationEmail,
 } from "@/lib/core/auth-user-client";
-import RecruiterEmailChangeModal from "./RecruiterEmailChangeModal";
-import RecruiterDeleteAccountDialog from "./RecruiterDeleteAccountDialog";
+// import RecruiterEmailChangeModal from "./RecruiterEmailChangeModal";
+// import RecruiterDeleteAccountDialog from "./RecruiterDeleteAccountDialog";
 
 /**
  * RecruiterAccountCard — Client Component
@@ -336,10 +336,11 @@ const RecruiterAccountCard = ({ recruiterData }) => {
               {email || "—"}
             </p>
 
+{/* In future we will add these feature */}
             {/* Action buttons */}
-            <div className="flex flex-wrap items-center gap-2 mt-2.5">
+            <div className="flex flex-wrap items-center gap-2   mt-2.5">
               {/* Resend verification — only if unverified */}
-              {!emailVerified && (
+              {/* {!emailVerified && (
                 <button
                   type="button"
                   onClick={handleResendVerification}
@@ -353,23 +354,25 @@ const RecruiterAccountCard = ({ recruiterData }) => {
                   )}
                   {isResendingVerification ? "Sending…" : "Resend Verification"}
                 </button>
-              )}
+              )} */}
 
               {/* Change email */}
-              <button
+              {/* <button
                 type="button"
                 onClick={() => setEmailModalOpen(true)}
                 className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-zinc-400 hover:text-white bg-zinc-800/40 hover:bg-zinc-800 border border-zinc-700/40 hover:border-zinc-600 px-3 py-1.5 rounded-lg transition-all duration-150 cursor-pointer"
               >
                 <FiEdit3 className="text-[10px]" />
                 Change Email
-              </button>
+              </button> */}
             </div>
+
+
           </div>
         </div>
 
         {/* ── Danger Zone ── */}
-        <div className="mx-6 mb-6 mt-2">
+        {/* <div className="mx-6 mb-6 mt-2">
           <div className="px-4 py-4 bg-red-500/5 border border-red-500/15 rounded-xl flex flex-col md:flex-row md:justify-between lg:flex-col gap-3">
             <div>
               <p className="text-[11px] font-bold text-red-400 uppercase tracking-wider">
@@ -389,24 +392,24 @@ const RecruiterAccountCard = ({ recruiterData }) => {
               Delete Account
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* ── Modals ── */}
-      <RecruiterEmailChangeModal
+      {/* <RecruiterEmailChangeModal
         isOpen={emailModalOpen}
         onClose={() => setEmailModalOpen(false)}
         currentEmail={email}
         callbackURL="/dashboard/recruiter/settings"
-      />
+      /> */}
 
-      <RecruiterDeleteAccountDialog
+      {/* <RecruiterDeleteAccountDialog
         isOpen={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
         userName={name}
         hasPassword={true}
         redirectTo="/"
-      />
+      /> */}
     </>
   );
 };
