@@ -1,12 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Pagination } from "@heroui/react";
-import { FiBriefcase, FiGlobe, FiMail, FiMapPin, FiUsers } from "react-icons/fi";
-import AdminCompanyStatusBadge from "./AdminCompanyStatusBadge";
-import AdminCompanyActionButtons from "./AdminCompanyActionButtons";
+import { FiBriefcase, FiCalendar, FiMapPin, FiTag } from "react-icons/fi";
+import AdminJobsStatusBadge from "./AdminJobsStatusBadge";
+import AdminJobActionButtons from "./AdminJobActionButtons";
 
 // ─── Date Formatting ──────────────────────────────────────────────────────────
 
@@ -30,18 +29,18 @@ const EmptyState = ({ search, status }) => (
     <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-5">
       <FiBriefcase className="size-7 text-zinc-600" />
     </div>
-    <h3 className="text-white font-bold text-lg mb-2">No Companies Found</h3>
+    <h3 className="text-white font-bold text-lg mb-2">No Jobs Found</h3>
     <p className="text-zinc-500 text-sm max-w-sm leading-relaxed">
       {search || (status && status !== "all")
-        ? "No companies matched your filter criteria. Try adjusting your search or filter settings."
-        : "There are no companies registered on the platform yet."}
+        ? "No job postings matched your search criteria or status filter. Try adjusting your settings."
+        : "There are currently no job postings available on the platform."}
     </p>
   </div>
 );
 
 // ─── Pagination Component ─────────────────────────────────────────────────────
 
-const CompaniesPagination = ({ currentPage, totalPages }) => {
+const JobsPagination = ({ currentPage, totalPages }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -128,20 +127,20 @@ const CompaniesPagination = ({ currentPage, totalPages }) => {
 // ─── Main Admin Table ─────────────────────────────────────────────────────────
 
 /**
- * AdminCompaniesTable
- * Client component — renders plain dark Tailwind table for all companies.
+ * AdminJobsTable
+ * Client component — renders plain dark Tailwind table for all jobs.
  *
- * @param {{ companies: Array, totalCompanies: number, currentPage: number, totalPages: number, currentSearch: string, currentStatus: string }} props
+ * @param {{ jobs: Array, totalJobs: number, currentPage: number, totalPages: number, currentSearch: string, currentStatus: string }} props
  */
-const AdminCompaniesTable = ({
-  companies = [],
-  totalCompanies = 0,
+const AdminJobsTable = ({
+  jobs = [],
+  totalJobs = 0,
   currentPage = 1,
   totalPages = 1,
   currentSearch = "",
   currentStatus = "all",
 }) => {
-  if (!companies || companies.length === 0) {
+  if (!jobs || jobs.length === 0) {
     return <EmptyState search={currentSearch} status={currentStatus} />;
   }
 
@@ -150,30 +149,30 @@ const AdminCompaniesTable = ({
       {/* Summary count */}
       <p className="text-xs text-zinc-500 font-medium">
         Showing{" "}
-        <span className="text-zinc-300 font-semibold">{companies.length}</span> of{" "}
-        <span className="text-zinc-300 font-semibold">{totalCompanies}</span>{" "}
-        compan{totalCompanies === 1 ? "y" : "ies"}
+        <span className="text-zinc-300 font-semibold">{jobs.length}</span> of{" "}
+        <span className="text-zinc-300 font-semibold">{totalJobs}</span>{" "}
+        job{totalJobs === 1 ? "" : "s"}
       </p>
 
       {/* Table container */}
-      <div className="w-full overflow-x-auto scrollbar-thin  scrollbar-thumb-primary rounded-xl border border-zinc-800/60 bg-zinc-950/40">
+      <div className="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-primary rounded-xl border border-zinc-800/60 bg-zinc-950/40">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-zinc-800/60">
               <th className="px-5 py-3.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider whitespace-nowrap">
-                Company
+                Job Title & Company
               </th>
               <th className="px-5 py-3.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider whitespace-nowrap">
-                Industry & Size
+                Category & Type
               </th>
               <th className="px-5 py-3.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider whitespace-nowrap">
-                Recruiter
+                Location
               </th>
               <th className="px-5 py-3.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider whitespace-nowrap">
                 Status
               </th>
               <th className="px-5 py-3.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider whitespace-nowrap">
-                Registered
+                Deadline
               </th>
               <th className="px-5 py-3.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider text-right whitespace-nowrap">
                 Actions
@@ -182,109 +181,106 @@ const AdminCompaniesTable = ({
           </thead>
 
           <tbody>
-            {companies.map((company, index) => (
-              <tr
-                key={company._id}
-                className={`group transition-colors duration-150 hover:bg-zinc-900/50 ${
-                  index !== companies.length - 1 ? "border-b border-zinc-800/40" : ""
-                }`}
-              >
-                {/* Logo + Company Name + Website + Location */}
-                <td className="px-5 py-4 min-w-55">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 shrink-0 rounded-xl bg-zinc-900 border border-zinc-800/80 overflow-hidden flex items-center justify-center relative">
-                      {company.logo ? (
-                        <Image
-                          src={company.logo}
-                          alt={company.name || "Company Logo"}
-                          width={40}
-                          height={40}
-                          className="object-cover w-full h-full"
-                          unoptimized
-                        />
-                      ) : (
-                        <FiBriefcase className="size-5 text-zinc-600" />
-                      )}
-                    </div>
+            {jobs.map((job, index) => {
+              const displayLocation =
+                job.location ||
+                [job.city?.trim(), job.country?.trim()].filter(Boolean).join(", ") ||
+                "—";
 
-                    <div className="space-y-1">
-                      <p className="text-sm font-bold text-white leading-tight group-hover:text-primary transition-colors duration-200">
-                        {company.name || "Unnamed Company"}
-                      </p>
-
-                      <div className="flex items-center gap-3 text-[11px] text-zinc-500">
-                        {company.location && (
-                          <span className="flex items-center gap-1">
-                            <FiMapPin className="size-3 text-zinc-600" />
-                            {company.location}
-                          </span>
-                        )}
-
-                        {company.website && (
-                          <a
-                            href={company.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-zinc-400 hover:text-primary transition-colors"
-                          >
-                            <FiGlobe className="size-3" />
-                            <span>Website</span>
-                          </a>
+              return (
+                <tr
+                  key={job._id}
+                  className={`group transition-colors duration-150  hover:bg-zinc-900/50 ${
+                    index !== jobs.length - 1 ? "border-b border-zinc-800/40" : ""
+                  }`}
+                >
+                  {/* Company Logo + Job Title + Company Name */}
+                  <td className="px-5 py-4 min-w-60">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 shrink-0 rounded-xl bg-zinc-900 border border-zinc-800/80 overflow-hidden flex items-center justify-center relative">
+                        {job.companyImage ? (
+                          <Image
+                            src={job.companyImage}
+                            alt={job.companyName || "Company Logo"}
+                            width={40}
+                            height={40}
+                            className="object-cover w-full h-full"
+                            unoptimized
+                          />
+                        ) : (
+                          <FiBriefcase className="size-5 text-zinc-600" />
                         )}
                       </div>
+
+                      <div className="space-y-0.5">
+                        <p className="text-sm font-bold text-white leading-tight group-hover:text-primary transition-colors duration-200">
+                          {job.jobTitle || "Untitled Job"}
+                        </p>
+                        <p className="text-xs text-zinc-400 font-medium">
+                          {job.companyName || "Unknown Company"}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </td>
+                  </td>
 
-                {/* Industry + Employee Range */}
-                <td className="px-5 py-4 whitespace-nowrap min-w-40">
-                  <div className="space-y-1">
-                    <p className="text-xs font-semibold text-zinc-300">
-                      {company.industry || "—"}
-                    </p>
-                    {company.employeeRange && (
-                      <p className="text-[11px] text-zinc-500 flex items-center gap-1">
-                        <FiUsers className="size-3 text-zinc-600" />
-                        {company.employeeRange}
-                      </p>
-                    )}
-                  </div>
-                </td>
+                  {/* Category & Job Type */}
+                  <td className="px-5 py-4 whitespace-nowrap min-w-40">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-300">
+                        <FiTag className="size-3 text-zinc-500 shrink-0" />
+                        <span>{job.jobCategory || "General"}</span>
+                      </div>
+                      {job.jobType && (
+                        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 capitalize">
+                          {job.jobType}
+                        </span>
+                      )}
+                    </div>
+                  </td>
 
-                {/* Recruiter Email */}
-                <td className="px-5 py-4 whitespace-nowrap min-w-45">
-                  <div className="flex items-center gap-1.5 text-xs text-zinc-300">
-                    <FiMail className="size-3.5 text-zinc-500 shrink-0" />
-                    <span className="truncate max-w-40" title={company.recruiterEmail}>
-                      {company.recruiterEmail || "—"}
-                    </span>
-                  </div>
-                </td>
+                  {/* Location */}
+                  <td className="px-5 py-4 whitespace-nowrap min-w-40 text-xs text-zinc-300">
+                    <div className="flex items-center gap-1.5">
+                      <FiMapPin className="size-3.5 text-zinc-500 shrink-0" />
+                      <span>{displayLocation}</span>
+                    </div>
+                  </td>
 
-                {/* Status Badge */}
-                <td className="px-5 py-4 whitespace-nowrap">
-                  <AdminCompanyStatusBadge status={company.status} />
-                </td>
+                  {/* Status Badge */}
+                  <td className="px-5 py-4 whitespace-nowrap">
+                    <AdminJobsStatusBadge status={job.status} />
+                  </td>
 
-                {/* Date Registered */}
-                <td className="px-5 py-4 whitespace-nowrap text-xs text-zinc-400">
-                  {formatDate(company.createdAt)}
-                </td>
+                  {/* Deadline & Created At */}
+                  <td className="px-5 py-4 whitespace-nowrap text-xs">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1.5 text-zinc-300">
+                        <FiCalendar className="size-3 text-zinc-500 shrink-0" />
+                        <span>{formatDate(job.applicationDeadline)}</span>
+                      </div>
+                      {job.createdAt && (
+                        <p className="text-[11px] text-zinc-500">
+                          Posted: {formatDate(job.createdAt)}
+                        </p>
+                      )}
+                    </div>
+                  </td>
 
-                {/* Conditional Actions (Approve / Reject) */}
-                <td className="px-5 py-4 whitespace-nowrap text-right">
-                  <AdminCompanyActionButtons company={company} />
-                </td>
-              </tr>
-            ))}
+                  {/* Actions */}
+                  <td className="px-5 py-4 whitespace-nowrap text-right">
+                    <AdminJobActionButtons job={job} />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
 
       {/* Pagination */}
-      <CompaniesPagination currentPage={currentPage} totalPages={totalPages} />
+      <JobsPagination currentPage={currentPage} totalPages={totalPages} />
     </div>
   );
 };
 
-export default AdminCompaniesTable;
+export default AdminJobsTable;
