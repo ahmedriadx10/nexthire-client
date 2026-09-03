@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { Resend } from "resend";
+import { admin } from "better-auth/plugins";
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const db = client.db(process.env.MONGODB_DB_NAME);
@@ -35,7 +36,7 @@ export const auth = betterAuth({
   },
 
   baseURL: process.env.BETTER_AUTH_URL,
-
+// social providers
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -43,6 +44,7 @@ export const auth = betterAuth({
     },
   },
 
+  // additonal field for user document
   user: {
     additionalFields: {
       role: { defaultValue: "seeker" },
@@ -61,6 +63,7 @@ export const auth = betterAuth({
       enabled: true,
     },
   },
+
 
   // ── Email Verification ──────────────────────────────────────────────────
   emailVerification: {
@@ -95,4 +98,12 @@ export const auth = betterAuth({
       });
     },
   },
+
+
+// plugins 
+
+plugins:[admin()]
+
+
+
 });
