@@ -27,6 +27,8 @@ const RegisterForm = () => {
     const submitFormData = {
       ...exactFormData,
       image: "",
+
+      //testing purpose till configure admin plugin feature 
       role,
       plan: role === "seeker" ? "seeker_free" : "recruiter_free",
     };
