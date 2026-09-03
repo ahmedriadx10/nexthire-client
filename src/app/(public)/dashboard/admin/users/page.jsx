@@ -1,12 +1,4 @@
-
-
-
-
 const AdminUsersManagementPage = async () => {
-  
-
-
-
   return (
     <div>
       <h2>Admin Users Management Page</h2>
