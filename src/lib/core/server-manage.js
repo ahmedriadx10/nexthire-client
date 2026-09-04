@@ -91,3 +91,7 @@ const handleStatusCode = (response) => {
 
   return response.json();
 };
+
+
+
+// here we can also add a status handle for fetch or protected fetch data 
