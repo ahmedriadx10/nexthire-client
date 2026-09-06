@@ -1,15 +1,13 @@
+import SeekerBillingSkeleton from "@/components/dashboard/seeker-components/SeekerBillingSkeleton";
 
+/**
+ * SeekerBillingAndSubscriptionPage — Server Component
+ *
+ * Renders the membership plan status, application quota, and payment history dashboard
+ * for job seeker accounts.
+ */
 const SeekerBillingAndSubscriptionPage = () => {
-  return (
-    <div>
-      <h2>Seeker Billing and Subscriptions page</h2>
-      {/* * Shows the Seeker's current plan (Free / Pro / Premium) and applications used this month.  
-* Upgrade/Downgrade buttons linking to the Pricing page.  
-* Payment history table with: Date, Plan, Amount, Transaction ID.  
-* Stripe-integrated card payment on upgrade.  
-* On successful payment: save payment record, activate the new plan, show a success toast. */}
-    </div>
-  );
+  return <SeekerBillingSkeleton />;
 };
 
 export default SeekerBillingAndSubscriptionPage;
