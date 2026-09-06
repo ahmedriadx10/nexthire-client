@@ -15,6 +15,6 @@ export const getAdminDashboardData = async () => {
   //   return null;
   // }
 
-  return protectedFetchData
+  return protectedFetchData('/dashboard/admin')
 
 };
