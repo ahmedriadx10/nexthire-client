@@ -38,7 +38,7 @@ const DasboardMobileMenu = ({ user }) => {
       <header className="lg:hidden flex h-16 items-center justify-between px-6 border-b border-zinc-800 bg-black/90 backdrop-blur-md sticky top-0 w-full z-40">
         <Link
           href="/"
-          className="text-2xl font-black tracking-tight text-primary select-none hover:text-primary/80 transition-colors"
+          className="text-2xl font-bold tracking-tight text-primary select-none hover:text-primary/80 transition-colors"
         >
           NextHire
         </Link>

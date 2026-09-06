@@ -18,7 +18,7 @@ const Footer = () => {
           <div className="md:col-span-5 flex flex-col items-start">
             <Link
               href="/"
-              className="text-3xl font-black tracking-tight text-primary select-none mb-4 hover:text-primary transition-colors duration-300"
+              className="text-2xl font-bold tracking-tight text-primary select-none mb-4 hover:text-primary transition-colors duration-300"
             >
               NextHire
             </Link>

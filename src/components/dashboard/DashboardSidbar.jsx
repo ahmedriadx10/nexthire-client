@@ -36,7 +36,7 @@ const DashboardSidbar = ({ user }) => {
       <div className="h-16 flex items-center px-6 border-b border-zinc-800">
         <Link
           href="/"
-          className="text-2xl font-black tracking-tight text-primary select-none hover:text-primary/80 transition-colors duration-300"
+          className="text-2xl font-bold tracking-tight text-primary select-none hover:text-primary/80 transition-colors duration-300"
         >
           NextHire
         </Link>
