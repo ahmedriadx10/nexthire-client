@@ -83,7 +83,7 @@ const handleStatusCode = (response) => {
   if (response.status === 401) {
     redirect("/unauthorized");
   } else if (response.status === 403) {
-    redirect("/forbidden");
+   redirect("/forbidden");
   }
   if (response.status === 404) {
     notFound();
