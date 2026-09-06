@@ -36,7 +36,7 @@ const NavbarManage = ({ activeUser }) => {
   const Logo = () => (
     <Link
       href="/"
-      className="flex items-center gap-2.5 text-2xl font-bold tracking-tight text-primary select-none"
+      className="flex items-center gap-2.5 text-2xl font-bold text-primary tracking-tight select-none"
     >
       {/* <div className="w-8 h-8 bg-[#6322d6] rounded-lg flex items-center justify-center text-white font-serif font-bold text-lg shadow-sm">
         F

@@ -23,7 +23,7 @@ const Loading = () => {
         </div>
        
         {/* Brand Name */}
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white  select-none">
+        <h1 className="text-3xl sm:text-4xl font-bold  text-white  select-none">
           Next<span className="text-primary">Hire</span>
         </h1>
 

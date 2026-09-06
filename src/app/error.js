@@ -33,7 +33,7 @@ const ErrorBoundary = ({ error, reset, unstable_retry }) => {
       <header className="relative z-10 p-6 sm:p-8 flex items-center justify-between max-w-7xl mx-auto w-full">
         <Link
           href="/"
-          className="text-2xl font-black tracking-tight text-white transition-all hover:opacity-90 select-none"
+          className="text-2xl font-black text-white transition-all hover:opacity-90 select-none"
         >
           Next<span className="text-primary">Hire</span>
         </Link>

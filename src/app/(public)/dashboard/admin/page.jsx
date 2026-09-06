@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { getAdminDashboardData } from "@/lib/api/admin-api/AdminDashboard";
 import AdminDashboardStatsGrid from "@/components/dashboard/admin-components/AdminDashboardStatsGrid";
 import AdminDashboardAnalyticsCharts from "@/components/dashboard/admin-components/AdminDashboardAnalyticsCharts";
