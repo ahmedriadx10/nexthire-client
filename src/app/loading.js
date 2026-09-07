@@ -1,5 +1,7 @@
 "use client";
 
+
+import { CirclesWithBar } from "react-loader-spinner";
 import { FadeLoader } from "react-spinners";
 
 const Loading = () => {
@@ -12,14 +14,29 @@ const Loading = () => {
       <div className="relative z-10 flex flex-col items-center justify-center p-8 text-center space-y-4">
            {/* Loading Spinner */}
         <div className="py-2 flex items-center justify-center">
-      <FadeLoader 
+      {/* <FadeLoader 
       color="#00a6fb"  
       height={30}        // 40px tall bars
       width={8}         
       radius={4}         
       margin={5}
       speedMultiplier={1}         
-    />
+    /> */}
+ <CirclesWithBar 
+height="100"
+width="100"
+color="#00a6fb"
+outerCircleColor="#00a6fb"
+innerCircleColor="#00a6fb"
+barColor="#ffffff"
+ariaLabel="circles-with-bar-loading"
+wrapperStyle={{}}
+wrapperClass=""
+visible={true}
+/>
+
+
+    
         </div>
        
         {/* Brand Name */}
