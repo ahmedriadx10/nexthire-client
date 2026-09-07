@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
@@ -32,59 +33,66 @@ const TrustedBy = () => {
         }
       `}</style>
 
-      {/* Title */}
-      <div className="flex items-center justify-center gap-4 mb-10 w-full px-4">
-        <div className="h-px flex-1 max-w-25 bg-linear-to-r from-transparent to-zinc-800" />
-        <span className="text-[10px] md:text-xs font-semibold tracking-[0.25em] text-zinc-550 uppercase select-none text-center">
-          Trusted by industry leaders
-        </span>
-        <div className="h-px flex-1 max-w-25 bg-linear-to-l from-transparent to-zinc-800" />
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        {/* Title */}
+        <div className="flex items-center justify-center gap-4 mb-10 w-full px-4">
+          <div className="h-px flex-1 max-w-25 bg-linear-to-r from-transparent to-zinc-800" />
+          <span className="text-[10px] md:text-xs font-semibold tracking-[0.25em] text-zinc-550 uppercase select-none text-center">
+            Trusted by industry leaders
+          </span>
+          <div className="h-px flex-1 max-w-25 bg-linear-to-l from-transparent to-zinc-800" />
+        </div>
 
-      {/* Swiper Slider */}
-      <div className="w-full max-w-6xl mx-auto px-4">
-        <Swiper
-          modules={[Autoplay]}
-          loop={true}
-          speed={4000}
-          slidesPerView={3}
-          spaceBetween={40}
-          allowTouchMove={false}
-          className="swiper-marquee"
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
-          }}
-          breakpoints={{
-            480: {
-              slidesPerView: 4,
-              spaceBetween: 50,
-            },
-            768: {
-              slidesPerView: 5,
-              spaceBetween: 60,
-            },
-            1024: {
-              slidesPerView: 6,
-              spaceBetween: 70,
-            },
-          }}
-        >
-          {logos.map((logo, idx) => (
-            <SwiperSlide key={idx} className="flex items-center justify-center">
-              <div className="relative w-28 h-10 flex items-center justify-center">
-                <Image
-                  src={logo.src}
-                  alt={logo.name}
-                  width={100}
-                  height={32}
-                  className="object-contain max-h-8  duration-300 select-none pointer-events-none"
-                />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+        {/* Swiper Slider */}
+        <div className="w-full max-w-6xl mx-auto px-4">
+          <Swiper
+            modules={[Autoplay]}
+            loop={true}
+            speed={4000}
+            slidesPerView={3}
+            spaceBetween={40}
+            allowTouchMove={false}
+            className="swiper-marquee"
+            autoplay={{
+              delay: 0,
+              disableOnInteraction: false,
+            }}
+            breakpoints={{
+              480: {
+                slidesPerView: 4,
+                spaceBetween: 50,
+              },
+              768: {
+                slidesPerView: 5,
+                spaceBetween: 60,
+              },
+              1024: {
+                slidesPerView: 6,
+                spaceBetween: 70,
+              },
+            }}
+          >
+            {logos.map((logo, idx) => (
+              <SwiperSlide key={idx} className="flex items-center justify-center">
+                <div className="relative w-28 h-10 flex items-center justify-center">
+                  <Image
+                    src={logo.src}
+                    alt={logo.name}
+                    width={100}
+                    height={32}
+                    className="object-contain max-h-8 duration-300 select-none pointer-events-none"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </motion.div>
     </section>
   );
 };

@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { 
   RiMapPinLine, 
   RiBriefcaseLine, 
@@ -6,7 +9,6 @@ import {
   RiArrowRightLine,
   RiCodeSSlashLine
 } from "react-icons/ri";
-
 
 const opportunities = [
   {
@@ -71,35 +73,75 @@ const opportunities = [
   },
 ];
 
+const gridVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 const FeaturedOpportunities = () => {
   return (
     <section className="relative w-full max-w-7xl mx-auto px-4 py-20">
       {/* Header section with heading and CTA */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12"
+      >
         <div>
           <span className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-primary uppercase select-none block mb-3">
             Smart Job Discovery
           </span>
           <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
- Featured Opportunities
-
-           </h2>
+            Featured Opportunities
+          </h2>
         </div>
-        <Link
-          href="/browse-jobs"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs md:text-sm font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all duration-300 shadow-md group self-start sm:self-auto"
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.98 }}
         >
-          <span>View all job posts</span>
-          <RiArrowRightLine className="text-base group-hover:translate-x-1 transition-transform duration-300" />
-        </Link>
-      </div>
+          <Link
+            href="/browse-jobs"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs md:text-sm font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition-all duration-300 shadow-md group self-start sm:self-auto"
+          >
+            <span>View all job posts</span>
+            <RiArrowRightLine className="text-base group-hover:translate-x-1 transition-transform duration-300" />
+          </Link>
+        </motion.div>
+      </motion.div>
 
       {/* Grid of opportunities */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <motion.div 
+        variants={gridVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
         {opportunities.map((job) => (
-          <div
+          <motion.div
             key={job.id}
-            className="flex flex-col justify-between bg-zinc-900/35 backdrop-blur-md border border-zinc-800/80 hover:border-zinc-700/60 hover:bg-zinc-900/60 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_35px_-10px_rgba(0,166,251,0.08)] group"
+            variants={cardVariants}
+            whileHover={{ y: -6, scale: 1.01 }}
+            transition={{ duration: 0.3 }}
+            className="flex flex-col justify-between bg-zinc-900/35 backdrop-blur-md border border-zinc-800/80 hover:border-zinc-700/60 hover:bg-zinc-900/60 rounded-2xl p-6 transition-colors duration-300 hover:shadow-[0_10px_35px_-10px_rgba(0,166,251,0.08)] group"
           >
             {/* Top row: Icon and Badge */}
             <div className="flex items-center justify-between mb-6">
@@ -149,9 +191,9 @@ const FeaturedOpportunities = () => {
                 <RiArrowRightLine className="text-base group-hover:translate-x-1.5 transition-transform duration-300" />
               </Link>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };
