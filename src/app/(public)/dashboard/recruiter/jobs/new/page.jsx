@@ -3,6 +3,13 @@ import { getRecruiterWithCompany } from "@/lib/api/RecruiterCompany";
 import EmptyCompanyStatus from "@/components/dashboard/recruiter-components/EmptyCompanyStatus";
 import CompanyNotApproved from "@/components/dashboard/recruiter-components/CompanyNotApproved";
 import RecruiterJobPost from "@/components/dashboard/recruiter-components/RecruiterJobPost";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Post a New Job | NextHire Recruiter",
+  description: "Create and publish a new job vacancy to reach thousands of qualified tech professionals.",
+  noIndex: true,
+});
 
 const RecruiterNewJobPostPage = async () => {
 

@@ -1,5 +1,12 @@
 import LoginForm from "@/components/auth/LoginForm";
 import Link from "next/link";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Sign In",
+  description: "Sign in to your NextHire account to manage job applications, post open listings, or review candidates.",
+  noIndex: true,
+});
 
 const LoginPage = () => {
   return (

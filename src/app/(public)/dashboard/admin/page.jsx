@@ -3,6 +3,13 @@ import { getAdminDashboardData } from "@/lib/api/admin-api/AdminDashboard";
 import AdminDashboardStatsGrid from "@/components/dashboard/admin-components/AdminDashboardStatsGrid";
 import AdminDashboardAnalyticsCharts from "@/components/dashboard/admin-components/AdminDashboardAnalyticsCharts";
 import AdminDashboardQuickActions from "@/components/dashboard/admin-components/AdminDashboardQuickActions";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Admin Overview | NextHire Admin",
+  description: "Platform metrics, job statistics, user acquisition, and overall system metrics for NextHire administrators.",
+  noIndex: true,
+});
 
 /**
  * AdminDashboardHomePage — Server Component

@@ -5,6 +5,13 @@ import { getRecruiterDashboardData } from "@/lib/api/RecruiterDashboard";
 import RecruiterDashboardStatsGrid from "@/components/dashboard/recruiter-components/RecruiterDashboardStatsGrid";
 import RecruiterRecentApplicationsTable from "@/components/dashboard/recruiter-components/RecruiterRecentApplicationsTable";
 import RecruiterCompanyOverviewCard from "@/components/dashboard/recruiter-components/RecruiterCompanyOverviewCard";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Recruiter Dashboard | NextHire",
+  description: "Overview of your posted jobs, active candidate applications, recent activity, and company metrics.",
+  noIndex: true,
+});
 
 /**
  * RecruiterDashboardHomePage — Server Component

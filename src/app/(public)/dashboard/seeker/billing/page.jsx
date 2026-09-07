@@ -1,4 +1,11 @@
 import SeekerBillingSkeleton from "@/components/dashboard/seeker-components/SeekerBillingSkeleton";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Billing & Plan | NextHire",
+  description: "View your job seeker membership features, application quotas, and account status.",
+  noIndex: true,
+});
 
 /**
  * SeekerBillingAndSubscriptionPage — Server Component

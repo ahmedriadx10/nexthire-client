@@ -6,6 +6,13 @@ import SeekerDashboardStatsGrid from "@/components/dashboard/seeker-components/S
 import SeekerLatestApplications from "@/components/dashboard/seeker-components/SeekerLatestApplications";
 import SeekerLatestJobs from "@/components/dashboard/seeker-components/SeekerLatestJobs";
 import SeekerProfileCard from "@/components/dashboard/seeker-components/SeekerProfileCard";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Seeker Dashboard | NextHire",
+  description: "Track your job applications, view bookmarked listings, and discover personalized job recommendations.",
+  noIndex: true,
+});
 
 /**
  * SeekerDashboardHomePage — Server Component

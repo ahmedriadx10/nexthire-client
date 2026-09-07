@@ -5,11 +5,15 @@ import CompanyPagination from "@/components/companies/CompanyPagination";
 import Link from "next/link";
 import { RiBuilding4Line } from "react-icons/ri";
 
-export const metadata = {
-  title: "Browse Companies | NextHire",
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Browse Companies & Top Employers",
   description:
-    "Discover the world's leading technology and creative organizations. Filter by industry, size, and values to find your next professional home.",
-};
+    "Explore top tech companies, startups, and enterprise organizations hiring on NextHire. Learn about company culture, active job openings, and tech stacks.",
+  canonical: "/companies",
+  keywords: ["tech employers", "hiring companies", "company profiles", "top tech startups", "employer directory"],
+});
 
 const CompaniesPage = async ({ searchParams }) => {
   // Next.js 16: searchParams is a Promise — must be awaited

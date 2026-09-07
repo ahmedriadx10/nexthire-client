@@ -2,11 +2,13 @@ import { getRecruiterWithProfile } from "@/lib/api/RecruiterProfile";
 import RecruiterAccountCard from "@/components/dashboard/recruiter-components/RecruiterAccountCard";
 import RecruiterProfileCard from "@/components/dashboard/recruiter-components/RecruiterProfileCard";
 
-export const metadata = {
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
   title: "Profile Settings | NextHire Recruiter",
-  description:
-    "Manage your recruiter profile — update your headline, bio, contact details, social links, and cover banner.",
-};
+  description: "Manage your recruiter profile — update your headline, bio, contact details, social links, and cover banner.",
+  noIndex: true,
+});
 
 const RecruiterProfileSettingsPage = async () => {
   const { recruiterData, recruiterProfile } = await getRecruiterWithProfile();

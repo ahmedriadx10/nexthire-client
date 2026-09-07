@@ -2,6 +2,13 @@ import { getLoggedInUserSession } from "@/lib/core/Session";
 import { getSeekerApplications } from "@/lib/actions/seeker-action/seekerApplicationActions";
 import SeekerApplicationsStats from "@/components/dashboard/seeker-components/SeekerApplicationsStats";
 import SeekerApplicationsTable from "@/components/dashboard/seeker-components/SeekerApplicationsTable";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "My Job Applications | NextHire",
+  description: "View status updates, interviews, and submitted applications for all your job applications.",
+  noIndex: true,
+});
 
 /**
  * SeekerMyApplicationsPage — Server Component

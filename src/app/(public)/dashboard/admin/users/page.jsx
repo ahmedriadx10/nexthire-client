@@ -3,6 +3,13 @@ import { getLoggedInUserSession } from "@/lib/core/Session";
 import AdminUsersStatsStrip from "@/components/dashboard/admin-components/AdminUsersStatsStrip";
 import AdminUsersSearchFilter from "@/components/dashboard/admin-components/AdminUsersSearchFilter";
 import AdminUsersTable from "@/components/dashboard/admin-components/AdminUsersTable";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Manage Users | NextHire Admin",
+  description: "View and manage all registered job seeker and recruiter user accounts, roles, and status flags.",
+  noIndex: true,
+});
 
 /**
  * AdminUsersManagementPage — Server Component

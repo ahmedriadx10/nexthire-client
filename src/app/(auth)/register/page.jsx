@@ -1,5 +1,12 @@
 import RegisterForm from "@/components/auth/RegisterFrom";
 import Link from "next/link";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Create Account",
+  description: "Join NextHire today as a job seeker or recruiter. Create your free account to start discovering opportunities or posting jobs.",
+  noIndex: true,
+});
 
 const RegisterPage = () => {
   return (

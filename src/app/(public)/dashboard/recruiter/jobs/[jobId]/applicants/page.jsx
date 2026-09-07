@@ -3,6 +3,21 @@ import { FiArrowLeft, FiBriefcase, FiUsers, FiMapPin } from "react-icons/fi";
 import { getRecruiterJobApplicants } from "@/lib/api/RecruiterApplicants";
 import { getRecruiterJobById } from "@/lib/api/RecruiterJob";
 import RecruiterJobApplicantsTable from "@/components/dashboard/recruiter-components/RecruiterJobApplicantsTable";
+import { constructMetadata } from "@/lib/metadata";
+
+export async function generateMetadata({ params }) {
+  const { jobId } = await params;
+  const jobRes = await getRecruiterJobById(jobId).catch(() => null);
+  const job = jobRes?.job || jobRes?.data || jobRes || null;
+
+  const jobTitle = job?.jobTitle || job?.title || "Job Applicants";
+
+  return constructMetadata({
+    title: `Applicants — ${jobTitle} | NextHire Recruiter`,
+    description: `Review candidate submissions, resume profiles, cover letters, and application statuses for ${jobTitle}.`,
+    noIndex: true,
+  });
+}
 
 /**
  * RecruiterJobPostApplicatsViewPage - Server Component

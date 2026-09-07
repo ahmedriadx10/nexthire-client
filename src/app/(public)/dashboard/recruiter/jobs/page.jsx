@@ -3,6 +3,13 @@ import { FiPlusCircle, FiLayers } from "react-icons/fi";
 import { getLoggedInUserSession } from "@/lib/core/Session";
 import { getRecruiterJobs } from "@/lib/api/RecruiterJob";
 import RecruiterJobsTable from "@/components/dashboard/recruiter-components/RecruiterJobsTable";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Manage Job Listings | NextHire Recruiter",
+  description: "View, filter, edit, and close active or draft job postings for your organization.",
+  noIndex: true,
+});
 
 // Number of jobs fetched per page — matches backend pagination config
 const JOBS_PER_PAGE = 10;

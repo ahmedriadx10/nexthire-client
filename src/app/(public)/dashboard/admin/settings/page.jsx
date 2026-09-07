@@ -2,11 +2,13 @@ import { getLoggedInUserSession } from "@/lib/core/Session";
 import AdminAccountCard from "@/components/dashboard/admin-components/AdminAccountCard";
 import AdminFutureSettingsCard from "@/components/dashboard/admin-components/AdminFutureSettingsCard";
 
-export const metadata = {
-  title: "Admin Profile Settings | NextHire Admin",
-  description:
-    "Manage your administrator account details, update profile photo and display name, and explore upcoming administrative capabilities.",
-};
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Platform Settings | NextHire Admin",
+  description: "Manage administrator account details, security settings, and platform configuration options.",
+  noIndex: true,
+});
 
 const AdminProfileSettingsPage = async () => {
   const currentUser = await getLoggedInUserSession();

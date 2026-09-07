@@ -6,11 +6,15 @@ import JobList from "@/components/browse-jobs/JobList";
 import Pagination from "@/components/browse-jobs/Pagination";
 import { getLoggedInUserSession } from "@/lib/core/Session";
 
-export const metadata = {
-  title: "Browse Jobs | NextHire",
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Browse Jobs & Career Opportunities",
   description:
-    "Search and filter thousands of professional jobs. Find your next opportunity by role, type, salary, and more.",
-};
+    "Explore, filter, and search thousands of active tech job openings. Filter by job type, experience, salary range, and company.",
+  canonical: "/browse-jobs",
+  keywords: ["search jobs", "tech career openings", "remote jobs", "full time developer jobs", "software engineering careers"],
+});
 
 /**
  * BrowseJobsPage — async Server Component.
