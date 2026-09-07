@@ -122,7 +122,7 @@ const NavbarManage = ({ activeUser }) => {
                 <Dropdown.Menu>
                   <Dropdown.Item id="profile" textValue="Profile">
                     <Link
-                      href={`/dashboard/${currentUser?.role}/profile`}
+                      href={`/dashboard/${currentUser?.role}/settings`}
                       className="w-full flex items-center justify-between gap-2 cursor-pointer"
                     >
                       <Label className="cursor-pointer text-slate-900">
