@@ -4,7 +4,25 @@ import { getLoggedInUserSession } from "@/lib/core/Session";
 import ApplyPageContainer from "@/components/browse-jobs/apply/ApplyPageContainer";
 import { FiAlertCircle, FiArrowLeft } from "react-icons/fi";
 
+import { constructMetadata } from "@/lib/metadata";
+
 export const revalidate = 0;
+
+export async function generateMetadata({ params }) {
+  const { jobId } = await params;
+  const job = await getJobDetails(jobId).catch(() => null);
+
+  const title = job ? `Apply for ${job.title} | NextHire` : "Apply for Job | NextHire";
+  const description = job
+    ? `Submit your application for ${job.title} at ${job.company?.name || "Company"}. Upload resume and details directly.`
+    : "Submit your application for this open role on NextHire.";
+
+  return constructMetadata({
+    title,
+    description,
+    noIndex: true,
+  });
+}
 
 const JobApplyPage = async ({ params }) => {
   const { jobId } = await params;

@@ -1,6 +1,13 @@
 import { getLoggedInUserSession } from "@/lib/core/Session";
 import { getSeekerSavedJobs } from "@/lib/actions/seeker-action/savedJobActions";
 import SeekerSavedJobsTable from "@/components/dashboard/seeker-components/SeekerSavedJobsTable";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Saved Jobs | NextHire",
+  description: "Access and review all job positions you have bookmarked for future application.",
+  noIndex: true,
+});
 
 const SAVED_JOBS_PER_PAGE=10
 

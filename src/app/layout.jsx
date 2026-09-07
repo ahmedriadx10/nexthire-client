@@ -1,13 +1,7 @@
-import { Inter, Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-
-//optional font import for future use
-// const poppins=Poppins({
-//   variable: "--font-poppins",
-//   subsets: ["latin"],
-//   weight: ["400", "500", "600", "700",'800','900'],
-// });
+import { constructMetadata } from "@/lib/metadata";
 
 const interFont = Inter({
   variable: "--font-inter",
@@ -15,11 +9,7 @@ const interFont = Inter({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-export const metadata = {
-  title: "NextHire",
-  description:
-    "NextHire is a platform that connects job seekers with potential employers, providing tools and resources to streamline the hiring process.",
-};
+export const metadata = constructMetadata();
 
 export default function RootLayout({ children }) {
   return (

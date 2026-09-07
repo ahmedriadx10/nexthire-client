@@ -1,9 +1,15 @@
 import CompanyManage from "@/components/dashboard/recruiter-components/CompanyManage";
 import EmptyCompanyStatus from "@/components/dashboard/recruiter-components/EmptyCompanyStatus";
 import {
- 
   getRecruiterWithCompany,
 } from "@/lib/api/RecruiterCompany";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Company Profile Management | NextHire Recruiter",
+  description: "Create, edit, and publish your company profile, logo, background banner, and organization details.",
+  noIndex: true,
+});
 
 
 const RecruiteMyCompanyPage = async () => {

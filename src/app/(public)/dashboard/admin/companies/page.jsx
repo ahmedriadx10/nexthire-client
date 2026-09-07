@@ -2,6 +2,13 @@ import { getAdminCompanies } from "@/lib/api/admin-api/AdminCompany";
 import AdminCompaniesStatsStrip from "@/components/dashboard/admin-components/AdminCompaniesStatsStrip";
 import AdminCompaniesSearchFilter from "@/components/dashboard/admin-components/AdminCompaniesSearchFilter";
 import AdminCompaniesTable from "@/components/dashboard/admin-components/AdminCompaniesTable";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Manage Companies | NextHire Admin",
+  description: "Manage registered company profiles, review verification requests, and update company statuses.",
+  noIndex: true,
+});
 
 /**
  * AdminManageCompaniesPage — Server Component

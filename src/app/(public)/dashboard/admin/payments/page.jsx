@@ -1,4 +1,11 @@
 import AdminPaymentsSkeleton from "@/components/dashboard/admin-components/AdminPaymentsSkeleton";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Payments & Subscriptions | NextHire Admin",
+  description: "View platform revenue logs, billing transactions, and recruiter subscription statuses.",
+  noIndex: true,
+});
 
 /**
  * AdminPaymentAndSubscriptionsManagePage — Server Component

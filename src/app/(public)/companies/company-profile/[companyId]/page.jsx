@@ -4,25 +4,34 @@ import CompanyProfileContent from "@/components/companies/profile/CompanyProfile
 import CompanyProfileSidebar from "@/components/companies/profile/CompanyProfileSidebar";
 import CompanyNotFound from "@/components/companies/profile/CompanyNotFound";
 
+import { constructMetadata } from "@/lib/metadata";
+
 export const revalidate = 0;
 
 export async function generateMetadata({ params }) {
   const { companyId } = await params;
-  const company = await getCompanyById(companyId);
+  const company = await getCompanyById(companyId).catch(() => null);
 
   if (!company) {
-    return {
-      title: "Company Not Found | NextHire",
-      description: "The requested company profile could not be found.",
-    };
+    return constructMetadata({
+      title: "Company Not Found",
+      description: "The requested company profile could not be found or has been removed.",
+      noIndex: true,
+    });
   }
 
-  return {
-    title: `${company.name} - Company Profile | NextHire`,
-    description:
-      company.description?.slice(0, 160) ||
-      `Discover career opportunities and detailed profile information for ${company.name} on NextHire.`,
-  };
+  const title = `${company.name} — Careers & Profile`;
+  const description =
+    company.description?.slice(0, 160) ||
+    `Discover career opportunities, company culture, open roles, and detailed information for ${company.name} on NextHire.`;
+
+  return constructMetadata({
+    title,
+    description,
+    canonical: `/companies/company-profile/${companyId}`,
+    image: company.logoUrl || company.coverImage || "/images/og-image.png",
+    keywords: [company.name, company.industry, "careers at " + company.name, "tech company profile"].filter(Boolean),
+  });
 }
 
 const CompanyDetailsPage = async ({ params }) => {

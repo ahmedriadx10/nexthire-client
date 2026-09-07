@@ -2,6 +2,13 @@ import { getAdminJobs } from "@/lib/api/admin-api/AdminJob";
 import AdminJobsStatsStrip from "@/components/dashboard/admin-components/AdminJobsStatsStrip";
 import AdminJobsSearchFilter from "@/components/dashboard/admin-components/AdminJobsSearchFilter";
 import AdminJobsTable from "@/components/dashboard/admin-components/AdminJobsTable";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Manage Jobs | NextHire Admin",
+  description: "Monitor and manage job listings, review flagged posts, and update job moderation statuses.",
+  noIndex: true,
+});
 
 /**
  * AdminManageJobsPage — Server Component

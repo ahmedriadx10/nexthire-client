@@ -2,11 +2,13 @@ import { getSeekerWithProfile } from "@/lib/api/SeekerProfile";
 import SeekerAccountCard from "@/components/dashboard/seeker-components/SeekerAccountCard";
 import SeekerProfileCard from "@/components/dashboard/seeker-components/SeekerProfileCard";
 
-export const metadata = {
-  title: "Profile Settings | NextHire Seeker",
-  description:
-    "Manage your job seeker profile — update your headline, bio, skills, resume Drive link, portfolio link, contact details, social links, and cover banner.",
-};
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Account & Profile Settings | NextHire",
+  description: "Manage your job seeker profile, upload resumes, update skills, and configure account credentials.",
+  noIndex: true,
+});
 
 const SeekerProfileSettingsPage = async () => {
   const { seekerData, seekerProfile } = await getSeekerWithProfile();

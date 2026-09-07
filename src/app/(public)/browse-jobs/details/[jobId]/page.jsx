@@ -6,7 +6,37 @@ import CompanyInfoCard from "@/components/browse-jobs/details/CompanyInfoCard";
 import Link from "next/link";
 import { FiAlertCircle, FiArrowLeft } from "react-icons/fi";
 
+import { constructMetadata } from "@/lib/metadata";
+
 export const revalidate = 0; // Ensures fresh permission and isApplied resolution per request
+
+export async function generateMetadata({ params }) {
+  const { jobId } = await params;
+  const job = await getJobDetails(jobId).catch(() => null);
+
+  if (!job) {
+    return constructMetadata({
+      title: "Job Listing Not Found",
+      description: "The requested job position could not be found or has been removed.",
+      noIndex: true,
+    });
+  }
+
+  const companyName = job.company?.name || job.companyName || "Company";
+  const location = job.location ? ` in ${job.location}` : "";
+  const title = `${job.title} at ${companyName}`;
+  const description =
+    job.description?.slice(0, 160) ||
+    `Apply for the ${job.title} position at ${companyName}${location}. Find responsibilities, requirements, and submit your application on NextHire.`;
+
+  return constructMetadata({
+    title,
+    description,
+    canonical: `/browse-jobs/details/${jobId}`,
+    image: job.company?.logoUrl || job.logoUrl || "/images/og-image.png",
+    keywords: [job.title, companyName, job.jobType, job.category].filter(Boolean),
+  });
+}
 
 const JobDetailsPage = async ({ params }) => {
   const { jobId } = await params;
