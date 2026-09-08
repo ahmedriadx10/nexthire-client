@@ -6,11 +6,11 @@ import { Skeleton } from "@heroui/react";
  */
 const CompanyProfileSkeleton = () => {
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
+    <main className="min-h-screen bg-zinc-950 text-white ">
       {/* Cover / banner */}
-      <Skeleton className="w-full h-48 md:h-64 rounded-none" />
+      {/* <Skeleton className="w-full bg-red-500 h-48 md:h-64 rounded-none" /> */}
 
-      <div className="max-w-5xl mx-auto px-4 -mt-12 pb-12 space-y-8">
+      <div className="max-w-5xl mx-auto px-4 mt-20  space-y-8">
         {/* Company header card */}
         <div className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 space-y-4">
           <div className="flex items-end gap-5">
@@ -19,11 +19,11 @@ const CompanyProfileSkeleton = () => {
               <Skeleton className="rounded-lg h-7 w-48" />
               <Skeleton className="rounded-md h-4 w-32" />
               <div className="flex gap-2 flex-wrap pt-1">
-                <Skeleton className="rounded-full h-6 w-20" />
+                <Skeleton className="rounded-full  h-6 w-20" />
                 <Skeleton className="rounded-full h-6 w-20" />
               </div>
             </div>
-            <Skeleton className="rounded-xl h-10 w-32 shrink-0" />
+            <Skeleton className="rounded-xl h-10 w-32 shrink" />
           </div>
 
           {/* Stats row */}

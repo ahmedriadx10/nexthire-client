@@ -54,7 +54,7 @@ const seekerData=await getLoggedInUserSession()
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <div className="max-w-6xl mx-auto py-20 px-4 sm:px-6 lg:px-8 space-y-6">
 
         {/* Search bar */}
         <SearchBar />

@@ -175,7 +175,7 @@ const NavbarManage = ({ activeUser }) => {
       </div>
 
       {isOpen && (
-        <div className="absolute top-16 left-0 w-full border border-foreground/15 bg-background/80 text-foreground shadow-2xl shadow-black/30 backdrop-blur-xl flex flex-col p-6 space-y-4 md:hidden transition-all duration-300 z-40">
+        <div className="absolute top-16 left-0 w-full border border-foreground/15 bg-zinc-950 text-foreground shadow-2xl shadow-black/30 backdrop-blur-xl flex flex-col p-6 space-y-4 md:hidden transition-all duration-300 z-40">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
