@@ -5,7 +5,8 @@ import { auth } from "../auth";
 
 import { headers } from "next/headers";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://nexthire-server-nine.vercel.app';
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL || "https://nexthire-server-nine.vercel.app";
 
 export const getAuthHeader = async () => {
   try {
@@ -76,14 +77,10 @@ export const serverDataDelete = async (path, method = "DELETE") => {
 
 // this function for handling status code
 const handleStatusCode = (response) => {
-  // if (!response.ok) {
-  //   throw new Error(`HTTP error! status: ${response.status}`);
-  // }
-
   if (response.status === 401) {
     redirect("/unauthorized");
   } else if (response.status === 403) {
-   redirect("/forbidden");
+    redirect("/forbidden");
   }
   if (response.status === 404) {
     notFound();
@@ -91,7 +88,3 @@ const handleStatusCode = (response) => {
 
   return response.json();
 };
-
-
-
-// here we can also add a status handle for fetch or protected fetch data 

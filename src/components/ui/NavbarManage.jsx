@@ -97,7 +97,7 @@ const NavbarManage = ({ activeUser }) => {
                   </Avatar.Fallback>
                 </Avatar>
               </Dropdown.Trigger>
-              <Dropdown.Popover className="mr-2.5 bg-zinc-950 rounded-2xl">
+              <Dropdown.Popover className="mr-2.5 bg-zinc-800 rounded-2xl">
                 <div className="px-3 pt-3 pb-1 ">
                   <div className="flex items-center gap-2">
                     <Avatar size="sm">
