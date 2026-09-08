@@ -32,35 +32,25 @@ const NavbarManage = ({ activeUser }) => {
     });
   }
 
-  // কাস্টম লোগো আইকন (image_210dfc.png এর মতো রাউন্ডেড পার্পল স্কয়ার)
-  const Logo = () => (
-    <Link
-      href="/"
-      className="flex items-center gap-2.5 text-2xl font-bold text-primary tracking-tight select-none"
-    >
-      {/* <div className="w-8 h-8 bg-[#6322d6] rounded-lg flex items-center justify-center text-white font-serif font-bold text-lg shadow-sm">
-        F
-      </div> */}
-
-      <span>NextHire</span>
-    </Link>
-  );
-
   const handleLogOut = async () => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push('/login')
+          router.push("/login");
           toast.success("Logut successful");
-         
         },
       },
     });
   };
 
   return (
-    <nav className="w-full sticky top-0 z-50  backdrop-blur-xl bg-black/50  px-6 sm:px-8 h-16 flex items-center justify-between">
-      <Logo />
+    <nav className="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-xl px-6 sm:px-8 h-16 flex items-center justify-between">
+      <Link
+        href="/"
+        className="flex items-center gap-2.5 text-2xl font-bold text-primary tracking-tight select-none"
+      >
+        <span>NextHire</span>
+      </Link>
 
       <div className="hidden md:flex items-center gap-8">
         {navLinks.map((link) => {
@@ -185,7 +175,7 @@ const NavbarManage = ({ activeUser }) => {
       </div>
 
       {isOpen && (
-        <div className="absolute top-16 left-0 w-full border border-zinc-700 bg-zinc-950 text-zinc-100 shadow-2xl shadow-black/70  flex flex-col p-6 space-y-4 md:hidden transition-all duration-300 z-40">
+        <div className="absolute top-16 left-0 w-full border border-foreground/15 bg-background/80 text-foreground shadow-2xl shadow-black/30 backdrop-blur-xl flex flex-col p-6 space-y-4 md:hidden transition-all duration-300 z-40">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -193,8 +183,8 @@ const NavbarManage = ({ activeUser }) => {
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className={`text-base font-semibold py-2 border-b  border-dashed border-zinc-600 ${
-                  isActive ? "text-[#6322d6]" : "text-white"
+                className={`text-base font-semibold py-2 border-b border-dashed border-foreground/20 ${
+                  isActive ? "text-primary" : "text-foreground"
                 }`}
               >
                 {link.name}
