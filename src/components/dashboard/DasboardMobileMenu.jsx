@@ -78,7 +78,7 @@ const DasboardMobileMenu = ({ user }) => {
           className="bg-zinc-950 border-r border-zinc-800 text-zinc-100 max-w-xs h-full shadow-2xl"
         >
           <Drawer.Dialog className="bg-zinc-950 flex flex-col h-full overflow-hidden text-zinc-100 outline-none">
-            <Drawer.CloseTrigger className="absolute top-4 right-4 text-zinc-400 hover:text-white cursor-pointer focus:outline-none" />
+            <Drawer.CloseTrigger className="absolute top-4 right-4 text-primary hover:text-primary/80 bg-black cursor-pointer focus:outline-none" />
 
             {/* Drawer Logo Section */}
             <Drawer.Header className="px-6 pt-6 pb-4 border-b border-zinc-900/80">

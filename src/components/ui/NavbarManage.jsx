@@ -97,7 +97,7 @@ const NavbarManage = ({ activeUser }) => {
                   </Avatar.Fallback>
                 </Avatar>
               </Dropdown.Trigger>
-              <Dropdown.Popover className="mr-2.5  rounded-2xl">
+              <Dropdown.Popover className="mr-2.5 bg-zinc-950 rounded-2xl">
                 <div className="px-3 pt-3 pb-1 ">
                   <div className="flex items-center gap-2">
                     <Avatar size="sm">
@@ -110,10 +110,10 @@ const NavbarManage = ({ activeUser }) => {
                       </Avatar.Fallback>
                     </Avatar>
                     <div className="flex flex-col gap-0">
-                      <p className="text-sm leading-5 font-semibold text-slate-800">
+                      <p className="text-sm leading-5 font-semibold text-primary">
                         {currentUser.name}
                       </p>
-                      <p className="text-xs leading-none text-slate-400">
+                      <p className="text-xs leading-none text-white">
                         {currentUser.email}
                       </p>
                     </div>
@@ -125,10 +125,10 @@ const NavbarManage = ({ activeUser }) => {
                       href={`/dashboard/${currentUser?.role}/settings`}
                       className="w-full flex items-center justify-between gap-2 cursor-pointer"
                     >
-                      <Label className="cursor-pointer text-slate-900">
+                      <Label className="cursor-pointer text-slate-400">
                         Profile
                       </Label>
-                      <FiUser className="size-4 text-slate-900" />
+                      <FiUser className="size-4 text-slate-400" />
                     </Link>
                   </Dropdown.Item>
 
@@ -137,7 +137,7 @@ const NavbarManage = ({ activeUser }) => {
                     textValue="Logout"
                     variant="danger"
                     onPress={handleLogOut}
-                    className="hover:bg-red-100"
+                    className=""
                   >
                     <div className="flex w-full items-center  justify-between gap-2 cursor-pointer">
                       <Label className="text-red-500 font-medium">
@@ -153,7 +153,7 @@ const NavbarManage = ({ activeUser }) => {
             <div className="flex items-center gap-3">
               <Link
                 href="/login"
-                className="text-sm font-semibold text-slate-600 hover:text-slate-900"
+                className="text-sm font-semibold text-slate-600 hover:text-white"
               >
                 Sign In
               </Link>
@@ -185,7 +185,7 @@ const NavbarManage = ({ activeUser }) => {
       </div>
 
       {isOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white border-b border-slate-100 shadow-lg flex flex-col p-6 space-y-4 md:hidden transition-all duration-300 z-40">
+        <div className="absolute top-16 left-0 w-full border border-zinc-700 bg-zinc-950 text-zinc-100 shadow-2xl shadow-black/70  flex flex-col p-6 space-y-4 md:hidden transition-all duration-300 z-40">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -193,8 +193,8 @@ const NavbarManage = ({ activeUser }) => {
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className={`text-base font-semibold py-2 border-b border-slate-50 ${
-                  isActive ? "text-[#6322d6]" : "text-slate-600"
+                className={`text-base font-semibold py-2 border-b  border-dashed border-zinc-600 ${
+                  isActive ? "text-[#6322d6]" : "text-white"
                 }`}
               >
                 {link.name}
@@ -223,9 +223,9 @@ const NavbarManage = ({ activeUser }) => {
           )}
 
           {currentUser && (
-            <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
+            <div className="pt-4  flex flex-col gap-3">
               <Link
-                href={`/dashboard/${currentUser?.role}/profile`}
+                href={`/dashboard/${currentUser?.role}/settings`}
                 onClick={() => setIsOpen(false)}
                 className="text-sm font-medium text-slate-500 hover:text-slate-900 flex items-center gap-2"
               >
