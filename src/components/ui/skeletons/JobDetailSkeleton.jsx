@@ -7,7 +7,7 @@ import { Skeleton } from "@heroui/react";
 const JobDetailSkeleton = () => {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-5xl mx-auto px-4 py-10 space-y-8">
+      <div className="max-w-5xl mx-auto px-4 py-20 space-y-8">
         {/* Header card */}
         <div className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 space-y-4">
           <div className="flex items-start gap-5">
@@ -21,7 +21,7 @@ const JobDetailSkeleton = () => {
                 <Skeleton className="rounded-full h-6 w-20" />
               </div>
             </div>
-            <Skeleton className="rounded-xl h-10 w-28 shrink-0" />
+            <Skeleton className="rounded-xl h-10 w-28 shrink" />
           </div>
         </div>
 
