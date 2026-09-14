@@ -13,7 +13,7 @@ Empowering talent and recruiters with intelligent job search, end-to-end applica
 [![Better Auth](https://img.shields.io/badge/Better--Auth-1.6-9333EA?style=for-the-badge&logo=auth0&logoColor=white)](https://better-auth.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](./LICENSE)
 
-[Live Demo](#) • [Explore Features](#-core-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Future Roadmap](#-future-roadmap)
+[Live Demo](https://nexthire-production-zero.vercel.app/) • [Explore Features](#-core-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Future Roadmap](#-future-roadmap)
 
 ---
 
