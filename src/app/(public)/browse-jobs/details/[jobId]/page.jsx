@@ -24,17 +24,17 @@ export async function generateMetadata({ params }) {
 
   const companyName = job.company?.name || job.companyName || "Company";
   const location = job.location ? ` in ${job.location}` : "";
-  const title = `${job.title} at ${companyName}`;
+  const title = `${job.jobTitle} at ${companyName}`;
   const description =
     job.description?.slice(0, 160) ||
-    `Apply for the ${job.title} position at ${companyName}${location}. Find responsibilities, requirements, and submit your application on NextHire.`;
+    `Apply for the ${job.jobTitle} position at ${companyName}${location}. Find responsibilities, requirements, and submit your application on NextHire.`;
 
   return constructMetadata({
     title,
     description,
     canonical: `/browse-jobs/details/${jobId}`,
     image: job.company?.logoUrl || job.logoUrl || "/images/og-image.png",
-    keywords: [job.title, companyName, job.jobType, job.category].filter(Boolean),
+    keywords: [job.jobTitle, companyName, job.jobType, job.category].filter(Boolean),
   });
 }
 
